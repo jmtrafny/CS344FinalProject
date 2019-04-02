@@ -1,0 +1,8 @@
+clientWithMenu:	clientWithMenu.c transmission.o DieWithError.o
+	gcc clientWithMenu.c transmission.o DieWithError.o -o clientWithMenu
+
+transmission.o:	transmission.c
+	gcc -c transmission.c
+
+DieWithError.o:	DieWithError.c
+	gcc -c DieWithError.c

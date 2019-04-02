@@ -1,0 +1,11 @@
+serverWithMenu:	serverWithMenu.c HandleTCPClientWithMenu.o transmission.o DieWithError.o
+	gcc serverWithMenu.c HandleTCPClientWithMenu.o transmission.o DieWithError.o -o serverWithMenu
+
+HandleTCPClientWithMenu.o:	HandleTCPClientWithMenu.c
+	gcc -c HandleTCPClientWithMenu.c
+	
+transmission.o:	transmission.c
+	gcc -c transmission.c
+
+DieWithError.o:	DieWithError.c
+	gcc -c DieWithError.c
