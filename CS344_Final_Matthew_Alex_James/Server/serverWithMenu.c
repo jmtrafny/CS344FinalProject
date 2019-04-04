@@ -12,6 +12,7 @@ void HandleTCPClient(int clntSocket);   /* TCP client handling function */
 
 int main(int argc, char *argv[])
 {
+	pid_t childpid;
     int servSock;                    /* Socket descriptor for server */
     int clntSock;                    /* Socket descriptor for client */
     struct sockaddr_in echoServAddr; /* Local address */
@@ -56,10 +57,16 @@ int main(int argc, char *argv[])
             DieWithError("accept() failed");
 
         /* clntSock is connected to a client! */
+        printf("Passing client to child process: %s\n", inet_ntoa(echoClntAddr.sin_addr));
 
-        printf("Handling client %s\n", inet_ntoa(echoClntAddr.sin_addr));
-
-        HandleTCPClient(clntSock);
+        childpid = fork();
+        if (childpid == -1) {
+            DieWithError("Failed to fork");
+            return 1;
+        }
+        if (childpid == 0){
+            HandleTCPClient(clntSock);   //child process
+        }
     }
     /* NOT REACHED */
 }
