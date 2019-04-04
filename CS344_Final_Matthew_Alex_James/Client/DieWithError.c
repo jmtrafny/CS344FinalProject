@@ -6,3 +6,5 @@ void DieWithError(char *errorMessage)
     perror(errorMessage);
     exit(1);
 }
+
+// Test
