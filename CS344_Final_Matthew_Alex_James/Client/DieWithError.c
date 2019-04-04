@@ -8,3 +8,4 @@ void DieWithError(char *errorMessage)
 }
 
 // Test
+// Change in new branch
