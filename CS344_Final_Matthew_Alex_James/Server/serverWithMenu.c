@@ -46,6 +46,7 @@ int main(int argc, char *argv[])
     if (listen(servSock, MAXPENDING) < 0)
         DieWithError("listen() failed");
 
+    unsigned int childProcCount = 0;
     for (;;) /* Run forever */
     {
         /* Set the size of the in-out parameter */
@@ -66,6 +67,23 @@ int main(int argc, char *argv[])
         }
         if (childpid == 0){
             HandleTCPClient(clntSock);   //child process
+            exit(0);                     //child process terminates
+        }
+
+        printf("With child process: %d\n", childpid);
+        close(clntSock);
+        childProcCount++;
+
+        while(childProcCount){ //Clean up zombies
+            childPid = waitpid((pid_t) -1, NULL, WNOHANG); //non blocking wait
+            if(childPid < 0){
+                DieWithError("waitpid() failed");
+            }
+            else if(childPid == 0){//no zombies to wait on
+                break;
+            }
+            else
+                childProcCount--; //cleaned up after a child
         }
     }
     /* NOT REACHED */
