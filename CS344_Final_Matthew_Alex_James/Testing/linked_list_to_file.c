@@ -70,6 +70,9 @@ int main(int argc, char *argv[])
 	printf("\nPrinting Project 2 info:\n");
 	printProject(ps2);
 	//-----------------------------------------------
+	// Display all projects from list
+	FILE * fp;
+	sendToFile(&project_list, fp);
 	
 	printf("ok\n");
 	

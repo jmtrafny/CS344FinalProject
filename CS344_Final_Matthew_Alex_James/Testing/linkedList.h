@@ -20,6 +20,7 @@ void append(LINKED_LIST * listPtr, void * dataPtr);
 int insert(LINKED_LIST * listPtr, void * dataPtr, int position);
 void * removeAtPosition(LINKED_LIST * listPtr, int position);
 void printProject(void *dataPtr);
+void sendToFile(LINKED_LIST * listPtr, FILE * outfile);
 void display(void * dataPtr);
 void displayMembers(void * dataPtr);
 void displayProjID(void * dataPtr);

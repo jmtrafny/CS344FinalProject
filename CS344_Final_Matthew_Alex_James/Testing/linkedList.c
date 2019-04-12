@@ -200,6 +200,15 @@ void printProject(void * dataPtr){
 	traverseForward(ps->proj_member_list, displayMembers);
 }
 
+void sendToFile(LINKED_LIST * listPtr, FILE * outFile){
+	LIST_NODE * front = listPtr->front;
+	while(front){
+		PROJECT_STRUCT * ps = (PROJECT_STRUCT *) listPtr;
+		printProject(ps);
+		front = front->next;
+	}
+}
+
 //void display(struct * project);
 // Author: DBG
 void display(void * data)
