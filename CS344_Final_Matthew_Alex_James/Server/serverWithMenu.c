@@ -75,11 +75,11 @@ int main(int argc, char *argv[])
         childProcCount++;
 
         while(childProcCount){ //Clean up zombies
-            childPid = waitpid((pid_t) -1, NULL, WNOHANG); //non blocking wait
-            if(childPid < 0){
+            childpid = waitpid((pid_t) -1, NULL, WNOHANG); //non blocking wait
+            if(childpid < 0){
                 DieWithError("waitpid() failed");
             }
-            else if(childPid == 0){//no zombies to wait on
+            else if(childpid == 0){//no zombies to wait on
                 break;
             }
             else
