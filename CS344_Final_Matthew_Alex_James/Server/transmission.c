@@ -8,7 +8,7 @@ void get(int sock, void * buffer, unsigned int size)
 
   while(totalBytesRcvd < size)
   {
-     if((bytesRcvd = recv(sock, buffer, size, 0)) <= 0)
+     if((bytesRcvd = recv(sock, buffer+bytesRcvd, size, 0)) <= 0)
        DieWithError("recv() failed or connection closed prematurely");
      totalBytesRcvd += bytesRcvd;
   }
