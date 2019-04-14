@@ -3,15 +3,14 @@
 #include <unistd.h>     /* for close() */
 #include <stdlib.h>
 #include <string.h>
+#include "../HeaderFiles/menu.h"
+#include "../HeaderFiles/projectStructure.h"
 
 #define RCVBUFSIZE 32   /* Size of receive buffer */
 #define NAME_SIZE 21 /*Includes room for null */
+#define DESC_SIZE 1001 //project description size
+#define DATE_SIZE 9 //project date created and due size
 
-struct menu{
-  unsigned char line1[20];
-  unsigned char line2[20];
-  unsigned char line3[20];
-} men;
 
 void DieWithError(char *errorMessage);  /* Error handling function */
 void get(int, void *, unsigned int);
@@ -56,34 +55,51 @@ void HandleTCPClient(int clntSocket)
 
 unsigned int sendMenuAndWaitForResponse(int clntSocket)
 {
-    struct menu mainMenu;
+    MENU mainMenu;
     unsigned int response = 0;
-    memset(&mainMenu, 0, sizeof(struct menu));   /* Zero out structure */
-    strcpy(mainMenu.line1,"1) Enter name\n");
-    strcpy(mainMenu.line2, "2) Enter number\n");
-    strcpy(mainMenu.line3, "3) Quit\n");
+    memset(&mainMenu, 0, sizeof(MENU));   /* Zero out structure */
+    strcpy(mainMenu.option1,"1) Create project\n");
+    strcpy(mainMenu.option2, "2) Edit project\n");
+    strcpy(mainMenu.option3, "3) Delete project\n");
+    strcpy(mainMenu.option4, "4) Save project\n");
+    strcpy(mainMenu.option5, "5) Display project\n");
+    strcpy(mainMenu.option6, "6) Exit program\n");
     printf("Sending menu\n");
-    put(clntSocket, &mainMenu, sizeof(struct menu));
+    put(clntSocket, &mainMenu, sizeof(MENU));
     get(clntSocket, &response, sizeof(unsigned int));
     return ntohl(response);
 }
 
-void askForName(int sock, char * name, unsigned int size)
+//"ask" portion of create project
+void createProject(int sock, PROJECT_STRUCT * project, unsigned int iSize) {
+    askForProjectID(sock, project->proj_id, iSize);
+
+
+
+
+    doSomethingWithNumber()
+}
+
+
+
+void askForProjectID(int sock, int * numPtr, unsigned int size)
 {
-    unsigned char msg[21];
+    unsigned char msg[40];
+    int numIn = 0;
+
     memset(msg, 0, sizeof(msg));
-    strcpy(msg, "Enter name:\n");
+    strcpy(msg, "Enter project number ID:\n");
     put(sock, msg, sizeof(msg));
-    memset(name, 0, NAME_SIZE);
-    get(sock, name, NAME_SIZE);
+    get(sock, &numIn, sizeof(int));
+    *numPtr = ntohl(numIn);
 }
 
-void doSomethingWithName(char * name)
+void doSomethingWithNumber(int number)
 {
-    printf("Received name from the client: %s\n", name);
+    printf("Received number from the client: %d\n", number);
 }
 
-void askForNumber(int sock, int * numPtr, unsigned int size)
+void askForProjectDescription(int sock, char * stringPtr,  size)
 {
     unsigned char msg[21];
     int numIn = 0;
@@ -95,8 +111,7 @@ void askForNumber(int sock, int * numPtr, unsigned int size)
     *numPtr = ntohl(numIn);
 }
 
-void doSomethingWithNumber(int number)
+void doSomethingWithName(char * name)
 {
-    printf("Received number from the client: %d\n", number);
+    printf("Received name from the client: %s\n", name);
 }
-
