@@ -1,11 +1,11 @@
 //Header file for doubly linked list type definitions and function declarations
-//remember to use relative paths to include in other files -> #include "../LinkedList/linkedList.h"
+//remember to use relative paths to include in other files -> #include "../HeaderFiles/linkedList.h"
 
 
 #ifndef LINKED_LIST_H
 #define LINKED_LIST_H
 
-typedef struct list_node{
+typedef struct list_node {
 	void * dataPtr;
 	struct list_node * next;
 	struct list_node * prev;

@@ -20,9 +20,12 @@ typedef struct{
 }DATA_TYPE;
 
 struct menu{
-  unsigned char line1[20];
-  unsigned char line2[20];
-  unsigned char line3[20];
+	unsigned char option1[40];
+	unsigned char option2[40];
+	unsigned char option3[40];
+	unsigned char option4[40];
+	unsigned char option5[40];
+	unsigned char option6[40];
 };
 
 void DieWithError(char *errorMessage);  /* Error handling function */
@@ -97,13 +100,13 @@ void talkToServer(int sock)
         switch(selection)
         {
             case 1:
-                sendName(sock);
+                sendProjectID(sock);
                 break;
             case 2:
                 sendNumber(sock);
                 break;
             }
-        if(selection == 3) break;
+        if(selection == 6) break;
     }
     selection = htonl(selection);
     put(sock, &selection, sizeof(unsigned int));
@@ -119,16 +122,32 @@ unsigned int displayMenuAndSendSelection(int sock)
 
     printf("Inside client display menu\n");
     get(sock, &menuBuffer, sizeof(struct menu));  //in this case server is also sending null
-    printf("%s\n", menuBuffer.line1);
-    printf("%s\n", menuBuffer.line2);
-    printf("%s\n", menuBuffer.line3);
+    printf("%s\n", menuBuffer.option1);
+    printf("%s\n", menuBuffer.option2);
+    printf("%s\n", menuBuffer.option3);
+    printf("%s\n", menuBuffer.option4);
+    printf("%s\n", menuBuffer.option5);
+    printf("%s\n", menuBuffer.option6);
     scanf("%d", &response);
     output = htonl(response);
     put(sock, &output, sizeof(unsigned int));
     return response;
 }
 
-void sendName(int sock)
+void sendProjectID(int sock)
+{
+    unsigned char msg[21];
+    int number = 0;
+
+    memset(msg, 0, sizeof(msg));
+    get(sock, msg, sizeof(msg));
+    printf("%s\n", msg);
+    scanf("%d", &number);
+    number = htonl(number);
+    put(sock, &number, sizeof(int));
+}
+
+void sendProjectDescription(int sock)
 {
     unsigned char msg[21];
     unsigned char name[NAME_SIZE];
@@ -139,18 +158,5 @@ void sendName(int sock)
     memset(name, 0, NAME_SIZE);
     scanf("%s", name);
     put(sock, name, NAME_SIZE);
-}
-
-void sendNumber(int sock)
-{
-    unsigned char msg[21];
-    int number;
-
-    memset(msg, 0, sizeof(msg));
-    get(sock, msg, sizeof(msg));
-    printf("%s\n", msg);
-    scanf("%d", &number);
-    number = htonl(number);
-    put(sock, &number, sizeof(int));
 }
 
