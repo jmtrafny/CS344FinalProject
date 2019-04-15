@@ -7,6 +7,9 @@
 
 #define RCVBUFSIZE 100   /* Size of receive buffer */
 #define NAME_SIZE 21 /*Includes room for null */
+#define DESC_SIZE 1001 //project description size
+#define DATE_SIZE 9 //project date created and due size
+
 
 typedef struct{
   unsigned int x;
@@ -33,11 +36,14 @@ void get(int, void *, unsigned int);
 void put(int, void *, unsigned int);
 void talkToServer(int);
 unsigned int displayMenuAndSendSelection(int);
-void sendName(int);
-void sendNumber(int);
+void sendProjectInformation(int);
+void sendProjectID(int);
+void sendProjectDescription(int);
+void sendProjectCreationDate(int);
+void sendProjectDueDate(int);
+void sendProjectMemberNum(int);
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     int sock;                        /* Socket descriptor */
     struct sockaddr_in echoServAddr; /* Echo server address */
     unsigned short echoServPort;     /* Echo server port */
@@ -88,8 +94,7 @@ int main(int argc, char *argv[])
     exit(0);
 }
 
-void talkToServer(int sock)
-{
+void talkToServer(int sock) {
     unsigned int selection = 0;
     unsigned char bye[5];
 
@@ -100,9 +105,18 @@ void talkToServer(int sock)
         switch(selection)
         {
             case 1:
-                sendProjectID(sock);
+                sendProjectInformation(sock);
                 break;
             case 2:
+                sendNumber(sock);
+                break;
+            case 3:
+                sendNumber(sock);
+                break;
+            case 4:
+                sendNumber(sock);
+                break;
+            case 5:
                 sendNumber(sock);
                 break;
             }
@@ -114,8 +128,7 @@ void talkToServer(int sock)
     printf("%s\n", bye);
 }
 
-unsigned int displayMenuAndSendSelection(int sock)
-{
+unsigned int displayMenuAndSendSelection(int sock) {
     struct menu menuBuffer;     /* Buffer for echo string */
     unsigned int response = 0;
     unsigned int output;
@@ -134,8 +147,15 @@ unsigned int displayMenuAndSendSelection(int sock)
     return response;
 }
 
-void sendProjectID(int sock)
-{
+void sendProjectInformation(int sock) {
+    sendProjectID(sock);
+    sendProjectDescription(sock);
+    sendProjectCreationDate(sock);
+    sendProjectDueDate(sock);
+    sendProjectMemberNum(sock);
+}
+
+void sendProjectID(int sock) {
     unsigned char msg[21];
     int number = 0;
 
@@ -147,16 +167,52 @@ void sendProjectID(int sock)
     put(sock, &number, sizeof(int));
 }
 
-void sendProjectDescription(int sock)
-{
+void sendProjectDescription(int sock) {
     unsigned char msg[21];
-    unsigned char name[NAME_SIZE];
+    unsigned char description[DESC_SIZE];
 
     memset(msg, 0, sizeof(msg));
     get(sock, msg, sizeof(msg));
     printf("%s\n", msg);
-    memset(name, 0, NAME_SIZE);
-    scanf("%s", name);
-    put(sock, name, NAME_SIZE);
+    memset(description, 0, DESC_SIZE);
+    scanf("%s", description);
+    put(sock, description, DESC_SIZE);
 }
+
+void sendProjectCreationDate(int sock) {
+    unsigned char msg[21];
+    unsigned char date[DATE_SIZE];
+
+    memset(msg, 0, sizeof(msg));
+    get(sock, msg, sizeof(msg));
+    printf("%s\n", msg);
+    memset(date, 0, DATE_SIZE);
+    scanf("%s", date);
+    put(sock, date, DATE_SIZE);
+}
+
+void sendProjectDueDate(int sock) {
+    unsigned char msg[21];
+    unsigned char date[DATE_SIZE];
+
+    memset(msg, 0, sizeof(msg));
+    get(sock, msg, sizeof(msg));
+    printf("%s\n", msg);
+    memset(date, 0, DATE_SIZE);
+    scanf("%s", date);
+    put(sock, date, DATE_SIZE);
+}
+
+void sendProjectMemberNum(int sock) {
+    unsigned char msg[21];
+    unsigned char memNum;
+
+    memset(msg, 0, sizeof(msg));
+    get(sock, msg, sizeof(msg));
+    printf("%s\n", msg);
+    memset(memNum, 0, sizeof(unsigned char));
+    scanf("%c", &memNum);
+    put(sock, memNum, sizeof(unsigned char));
+}
+
 
