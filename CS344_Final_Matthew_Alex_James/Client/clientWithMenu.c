@@ -108,16 +108,16 @@ void talkToServer(int sock) {
                 sendProjectInformation(sock);
                 break;
             case 2:
-                sendNumber(sock);
+
                 break;
             case 3:
-                sendNumber(sock);
+
                 break;
             case 4:
-                sendNumber(sock);
+
                 break;
             case 5:
-                sendNumber(sock);
+
                 break;
             }
         if(selection == 6) break;
@@ -156,7 +156,7 @@ void sendProjectInformation(int sock) {
 }
 
 void sendProjectID(int sock) {
-    unsigned char msg[21];
+    unsigned char msg[40];
     int number = 0;
 
     memset(msg, 0, sizeof(msg));
@@ -168,7 +168,7 @@ void sendProjectID(int sock) {
 }
 
 void sendProjectDescription(int sock) {
-    unsigned char msg[21];
+    unsigned char msg[40];
     unsigned char description[DESC_SIZE];
 
     memset(msg, 0, sizeof(msg));
@@ -180,7 +180,7 @@ void sendProjectDescription(int sock) {
 }
 
 void sendProjectCreationDate(int sock) {
-    unsigned char msg[21];
+    unsigned char msg[40];
     unsigned char date[DATE_SIZE];
 
     memset(msg, 0, sizeof(msg));
@@ -192,7 +192,7 @@ void sendProjectCreationDate(int sock) {
 }
 
 void sendProjectDueDate(int sock) {
-    unsigned char msg[21];
+    unsigned char msg[40];
     unsigned char date[DATE_SIZE];
 
     memset(msg, 0, sizeof(msg));
@@ -204,7 +204,7 @@ void sendProjectDueDate(int sock) {
 }
 
 void sendProjectMemberNum(int sock) {
-    unsigned char msg[21];
+    unsigned char msg[40];
     unsigned char memNum;
 
     memset(msg, 0, sizeof(msg));
