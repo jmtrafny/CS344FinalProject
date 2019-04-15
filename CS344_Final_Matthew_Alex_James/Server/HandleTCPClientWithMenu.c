@@ -27,19 +27,32 @@ void HandleTCPClient(int clntSocket)
     unsigned int response = 0;
     unsigned char name[NAME_SIZE]; //max length 20
     int number = 0;
+    PROJECT_STRUCT * project = (PROJECT_STRUCT *) calloc (1, sizeof(PROJECT_STRUCT));
     unsigned char errorMsg[] = "Invalid Choice";
     unsigned char bye[] = "Bye!";
 
     response = sendMenuAndWaitForResponse(clntSocket);
-    while(response != 3)
+    while(response != 6)
     {
         switch(response)
         {
-            case 1: printf("Client selected 1.\n");
+            case 1: printf("Client created a project.\n");
                     askForName(clntSocket, name, NAME_SIZE);
                     doSomethingWithName(name);
                     break;
-            case 2: printf("Client selected 2.\n");
+            case 2: printf("Client is editing a project.\n");
+                    askForNumber(clntSocket, &number, sizeof(int));
+                    doSomethingWithNumber(number);
+                    break;
+            case 3: printf("Client is deleting a project.\n");
+                    askForNumber(clntSocket, &number, sizeof(int));
+                    doSomethingWithNumber(number);
+                    break;
+            case 4: printf("Client is saving a project.\n");
+                    askForNumber(clntSocket, &number, sizeof(int));
+                    doSomethingWithNumber(number);
+                    break;
+            case 5: printf("Client is displaying a project.\n");
                     askForNumber(clntSocket, &number, sizeof(int));
                     doSomethingWithNumber(number);
                     break;
@@ -53,8 +66,7 @@ void HandleTCPClient(int clntSocket)
     printf("Connection with client %d closed.\n", clntSocket);
 }
 
-unsigned int sendMenuAndWaitForResponse(int clntSocket)
-{
+unsigned int sendMenuAndWaitForResponse(int clntSocket) {
     MENU mainMenu;
     unsigned int response = 0;
     memset(&mainMenu, 0, sizeof(MENU));   /* Zero out structure */
@@ -71,9 +83,9 @@ unsigned int sendMenuAndWaitForResponse(int clntSocket)
 }
 
 //"ask" portion of create project
-void createProject(int sock, PROJECT_STRUCT * project, unsigned int iSize) {
-    askForProjectID(sock, project->proj_id, iSize);
-
+void createProject(int sock, PROJECT_STRUCT * project) {
+    askForProjectID(sock, project->proj_id, sizeof(project->proj_id));
+    askForProjectDescription(sock, project->proj_desc, sizeof(project->proj_desc));
 
 
 
@@ -82,8 +94,7 @@ void createProject(int sock, PROJECT_STRUCT * project, unsigned int iSize) {
 
 
 
-void askForProjectID(int sock, int * numPtr, unsigned int size)
-{
+void askForProjectID(int sock, int * numPtr, unsigned int size) {
     unsigned char msg[40];
     int numIn = 0;
 
@@ -94,21 +105,50 @@ void askForProjectID(int sock, int * numPtr, unsigned int size)
     *numPtr = ntohl(numIn);
 }
 
-void doSomethingWithNumber(int number)
-{
-    printf("Received number from the client: %d\n", number);
+void askForProjectDescription(int sock, char * stringPtr,  size) {
+    unsigned char msg[40];
+
+    memset(msg, 0, sizeof(msg));
+    strcpy(msg, "Enter project description:\n");
+    put(sock, msg, sizeof(msg));
+    memset(stringPtr, 0, DESC_SIZE);
+    get(sock, stringPtr, DESC_SIZE);
 }
 
-void askForProjectDescription(int sock, char * stringPtr,  size)
-{
-    unsigned char msg[21];
+void askForProjectDateCreated(int sock, int * numPtr, unsigned int size) {
+    unsigned char msg[40];
     int numIn = 0;
 
     memset(msg, 0, sizeof(msg));
-    strcpy(msg, "Enter number:\n");
+    strcpy(msg, "Enter project creation date:\n");
     put(sock, msg, sizeof(msg));
     get(sock, &numIn, sizeof(int));
     *numPtr = ntohl(numIn);
+
+}
+
+void askForProjectDateDue(int sock, int * numPtr, unsigned int size) {
+    unsigned char msg[40];
+    int numIn = 0;
+
+    memset(msg, 0, sizeof(msg));
+    strcpy(msg, "Enter project due date:\n");
+    put(sock, msg, sizeof(msg));
+    get(sock, &numIn, sizeof(int));
+    *numPtr = ntohl(numIn);
+
+}
+
+void askForMemberNum(int sock, int * numPtr, unsigned int size) {
+    unsigned char msg[40];
+    int numIn = 0;
+
+    memset(msg, 0, sizeof(msg));
+    strcpy(msg, "Enter number of members:\n");
+    put(sock, msg, sizeof(msg));
+    get(sock, &numIn, sizeof(int));
+    *numPtr = ntohl(numIn);
+
 }
 
 void doSomethingWithName(char * name)
