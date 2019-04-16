@@ -189,6 +189,7 @@ void * removeAtPosition(LINKED_LIST * listPtr, int position){
 	return tempData;
 }
 
+// For displaying project to consol
 void printProject(void * dataPtr){
 	PROJECT_STRUCT * ps = (PROJECT_STRUCT *) dataPtr;
 	printf("Project ID: %d\n", ps->proj_id);
@@ -201,12 +202,41 @@ void printProject(void * dataPtr){
 }
 
 void sendToFile(LINKED_LIST * listPtr, FILE * outFile){
+	// Access first node in our list
 	LIST_NODE * front = listPtr->front;
+	PROJECT_STRUCT * ps = (PROJECT_STRUCT *) malloc(sizeof(PROJECT_STRUCT));
+	LINKED_LIST member_list;
+	LIST_NODE * member_node;
+
+	// open file, write size of list
+	outFile = fopen("out.file", "w");
+	fprintf(outFile, "%d\n", listPtr->size);
+	
 	while(front){
-		PROJECT_STRUCT * ps = (PROJECT_STRUCT *) listPtr;
-		printProject(ps);
+		// Get project from current node
+		ps = (PROJECT_STRUCT *) front->dataPtr;
+		member_list = ps->proj_member_list;
+		member_node = member_list.front;
+
+		// Write contents to file
+		fprintf(outFile, "%d\n", ps->proj_id);
+		fprintf(outFile, "%s\n", ps->proj_desc);
+		fprintf(outFile, "%s\n", ps->proj_date_created);
+		fprintf(outFile, "%s\n", ps->proj_date_due);
+		fprintf(outFile, "%d\n", ps->proj_num_members);
+		// Go through members
+		while(member_node){
+			char * arr = member_node->dataPtr;
+			fprintf(outFile, "%s\n", arr);
+			printf("%s\n", arr);
+			member_node = member_node->next;
+		}
+
+		// Go to next node
 		front = front->next;
 	}
+	
+	fclose(outFile);
 }
 
 //void display(struct * project);

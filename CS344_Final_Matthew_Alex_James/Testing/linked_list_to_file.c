@@ -65,10 +65,10 @@ int main(int argc, char *argv[])
 	//traverseForward(project_2_member_list, displayMembers);
 	//-----------------------------------------------
 	// Display all project info
-	printf("\nPrinting Project 1 info:\n");
-	printProject(ps1);
-	printf("\nPrinting Project 2 info:\n");
-	printProject(ps2);
+	//printf("\nPrinting Project 1 info:\n");
+	//printProject(ps1);
+	//printf("\nPrinting Project 2 info:\n");
+	//printProject(ps2);
 	//-----------------------------------------------
 	// Display all projects from list
 	FILE * fp;
