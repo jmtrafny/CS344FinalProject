@@ -73,6 +73,10 @@ int main(int argc, char *argv[])
 	// Display all projects from list
 	FILE * fp;
 	sendToFile(&project_list, fp);
+
+	LINKED_LIST * loaded_list = loadFromFile();
+
+
 	
 	printf("ok\n");
 	

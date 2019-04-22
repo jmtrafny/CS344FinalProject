@@ -239,6 +239,35 @@ void sendToFile(LINKED_LIST * listPtr, FILE * outFile){
 	fclose(outFile);
 }
 
+LINKED_LIST * loadFromFile(){
+	LINKED_LIST * project_list = (LINKED_LIST *) malloc(sizeof(LINKED_LIST));
+	FILE * fp;
+	char fname[100] = "";
+	printf("\n\nPlease enter file name to load from: \n");
+	scanf("%s",&fname);
+	fp = fopen(fname,"r");
+        if(fp == NULL)
+	{
+		printf("\n%s\" File NOT FOUND!", fname);
+		return project_list;
+	}
+
+	// File is now open, can now read through file to fill in project struct
+	char * line = NULL;
+	size_t len = 0;
+	ssize_t read;
+
+	while((read = getline(&line, &len, fp)) != -1){
+		//printf("Retrieved line of length%u :\n", read);
+		printf("%s", line);
+	}
+
+	free(line);
+	fclose(fp);
+	printf("LFF\n");
+	return project_list;
+}
+
 //void display(struct * project);
 // Author: DBG
 void display(void * data)

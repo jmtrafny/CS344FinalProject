@@ -21,6 +21,7 @@ int insert(LINKED_LIST * listPtr, void * dataPtr, int position);
 void * removeAtPosition(LINKED_LIST * listPtr, int position);
 void printProject(void *dataPtr);
 void sendToFile(LINKED_LIST * listPtr, FILE * outfile);
+LINKED_LIST * loadFromFile();
 void display(void * dataPtr);
 void displayMembers(void * dataPtr);
 void displayProjID(void * dataPtr);
