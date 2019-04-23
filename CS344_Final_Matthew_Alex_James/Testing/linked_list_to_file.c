@@ -71,11 +71,19 @@ int main(int argc, char *argv[])
 	//printProject(ps2);
 	//-----------------------------------------------
 	// Display all projects from list
-	FILE * fp;
-	sendToFile(&project_list, fp);
-
+	
 	LINKED_LIST * loaded_list = loadFromFile();
+	LIST_NODE * front = (LIST_NODE *) malloc(sizeof(LIST_NODE));
+	front = loaded_list->front;
+	int i;
+	printf("This is what we loaded:\n");
+	while(front){
+		printProject(front->dataPtr);
+		front = front->next;
+	}
 
+	FILE * fp;
+	sendToFile(loaded_list, fp);
 
 	
 	printf("ok\n");

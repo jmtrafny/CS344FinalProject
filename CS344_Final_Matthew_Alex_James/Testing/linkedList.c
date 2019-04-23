@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "linkedList.h"
 #include "projectStructure.h"
 
@@ -228,7 +229,7 @@ void sendToFile(LINKED_LIST * listPtr, FILE * outFile){
 		while(member_node){
 			char * arr = member_node->dataPtr;
 			fprintf(outFile, "%s\n", arr);
-			printf("%s\n", arr);
+			//printf("%s\n", arr);
 			member_node = member_node->next;
 		}
 
@@ -240,7 +241,12 @@ void sendToFile(LINKED_LIST * listPtr, FILE * outFile){
 }
 
 LINKED_LIST * loadFromFile(){
+	// Create project list that will be returned
 	LINKED_LIST * project_list = (LINKED_LIST *) malloc(sizeof(LINKED_LIST));
+	project_list->size = 0;
+	project_list->front = project_list->back = NULL;
+
+	// Create file pointer and open file
 	FILE * fp;
 	char fname[100] = "";
 	printf("\n\nPlease enter file name to load from: \n");
@@ -257,14 +263,58 @@ LINKED_LIST * loadFromFile(){
 	size_t len = 0;
 	ssize_t read;
 
-	while((read = getline(&line, &len, fp)) != -1){
-		//printf("Retrieved line of length%u :\n", read);
-		printf("%s", line);
+	// Get first integer in file; that is the number of projects.
+	read = getline(&line, &len, fp);
+	unsigned int num_of_projects = atoi(line);
+	printf("%d projects found!\n", num_of_projects);
+
+	// Outer loop of reading loop, one for each project
+	int i = 0; // for loop outer index
+	for(i = 0; i < num_of_projects; i++){
+		// Create project structure and start filling it in
+		PROJECT_STRUCT * ps = (PROJECT_STRUCT *) malloc(sizeof(PROJECT_STRUCT));
+		//--------------------------------------
+		read = getline(&line, &len, fp);      // proj_id
+		ps->proj_id = atoi(line);			  
+
+		read = getline(&line, &len, fp);      // proj_desc
+		strncpy(ps->proj_desc, line, read-1);
+
+		read = getline(&line, &len, fp);      // proj_date_created
+		strncpy(ps->proj_date_created, line, read-1);
+
+		read = getline(&line, &len, fp);      // proj_due_date
+		strncpy(ps->proj_date_due, line, read-1);
+
+		read = getline(&line, &len, fp);      // proj_num_members
+		ps->proj_num_members = atoi(line);	  
+
+		LINKED_LIST member_list;// = (LINKED_LIST *) malloc(sizeof(LINKED_LIST));
+		member_list.size = 0;
+		member_list.front = member_list.back = NULL;
+
+		int j = 0; // for loop inner index
+		for(j = 0; j < ps->proj_num_members; j++){
+			// Add members to members linked list
+			read = getline(&line, &len, fp);
+			line[strlen(line)-1] = '\0';
+			printf("reading: %s\n",line);
+			append(&member_list, line);
+		}	
+		//--------------------------------------
+		// Now attach the linked list we just made to the proj
+		ps->proj_member_list = member_list;
+		printf("printing memberlist:\n");
+		traverseForward(ps->proj_member_list, displayMembers);
+		//printf("Printing project %d\n", ps->proj_id);
+		//printProject(ps);
+		// Add project to list to be returned
+		append(project_list, ps);
 	}
 
 	free(line);
 	fclose(fp);
-	printf("LFF\n");
+	printf("***Leaving loadFromFile()\n");
 	return project_list;
 }
 
@@ -278,7 +328,7 @@ void display(void * data)
 
 void displayMembers(void * dataPtr){
 	char * arr = dataPtr;
-	printf("\t%s\n", arr);
+	printf("%s\n", arr);
 }
 
 void displayProjID(void * dataPtr){
