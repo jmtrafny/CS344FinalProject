@@ -260,6 +260,7 @@ LINKED_LIST * loadFromFile(){
 
 	// File is now open, can now read through file to fill in project struct
 	char * line = NULL;
+	char * p;
 	size_t len = 0;
 	ssize_t read;
 
@@ -298,7 +299,7 @@ LINKED_LIST * loadFromFile(){
 			// Add members to members linked list
 			read = getline(&line, &len, fp);
 			line[strlen(line)-1] = '\0';
-			printf("reading: %s\n",line);
+			printf("reading: %s\n", line);
 			append(&member_list, line);
 		}	
 		//--------------------------------------

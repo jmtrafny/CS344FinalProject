@@ -73,6 +73,7 @@ int main(int argc, char *argv[])
 	// Display all projects from list
 	
 	LINKED_LIST * loaded_list = loadFromFile();
+	
 	LIST_NODE * front = (LIST_NODE *) malloc(sizeof(LIST_NODE));
 	front = loaded_list->front;
 	int i;

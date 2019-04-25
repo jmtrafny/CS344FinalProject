@@ -21,7 +21,13 @@ void askForName(int sock, char *, unsigned int);
 void doSomethingWithName(char *);
 void askForNumber(int sock, int *, unsigned int);
 void doSomethingWithNumber(int);
-
+void createProject(int sock, PROJECT_STRUCT * project);
+void askForProjectID(int sock, int numPtr, unsigned int size);
+void askForProjectDescription(int sock, char * stringPtr, unsigned int size);
+void askForProjectDateCreated(int sock, char * stringPtr, unsigned int size);
+void askForProjectDateDue(int sock, char * stringPtr, unsigned int size);
+void askForMemberNum(int sock, char * numPtr, unsigned char size);
+void doSomethingWithName(char * name);
 
 typedef struct project_struct{
 	int proj_id;
@@ -105,7 +111,7 @@ void createProject(int sock, PROJECT_STRUCT * project) {
 
 
 
-void askForProjectID(int sock, int * numPtr, unsigned int size) {
+void askForProjectID(int sock, int numPtr, unsigned int size) {
     unsigned char msg[40];
     int numIn = 0;
 
@@ -115,7 +121,7 @@ void askForProjectID(int sock, int * numPtr, unsigned int size) {
     printf("Before get() in askForProjectID().\n");
     get(sock, &numIn, size);
     printf("After get() in askForProjectID().\n");
-    *numPtr = ntohl(numIn);
+    numPtr = ntohl(numIn);
 }
 
 void askForProjectDescription(int sock, char * stringPtr, unsigned int size) {
