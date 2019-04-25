@@ -26,7 +26,7 @@ void display(void * dataPtr);
 void displayMembers(void * dataPtr);
 void displayProjID(void * dataPtr);
 void displayProjDesc(void * dataPtr);
-void traverseForward(LINKED_LIST head, void function(void *));
+void traverseForward(LINKED_LIST * head, void function(void *));
 void traverseBackward(LINKED_LIST head, void function(void *));
 
 

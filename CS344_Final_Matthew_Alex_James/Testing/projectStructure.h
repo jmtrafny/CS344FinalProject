@@ -10,7 +10,7 @@ typedef struct project_struct{
 	char proj_date_created[9];
 	char proj_date_due[9];
 	unsigned char proj_num_members;
-	LINKED_LIST proj_member_list;
+	LINKED_LIST * proj_member_list;
 } PROJECT_STRUCT;
 
 
