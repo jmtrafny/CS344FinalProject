@@ -273,7 +273,6 @@ LINKED_LIST * loadFromFile(){
 	// Outer loop of reading loop, one for each project
 	int i = 0; // for loop outer index
 	for(i = 0; i < num_of_projects; i++){
-		printf("In for loop\n");
 		// Create project structure and start filling it in
 		PROJECT_STRUCT * ps = (PROJECT_STRUCT *) malloc(sizeof(PROJECT_STRUCT));
 		//--------------------------------------
@@ -284,20 +283,20 @@ LINKED_LIST * loadFromFile(){
 		read = getline(&line, &len, fp);      // proj_desc
 		strncpy(ps->proj_desc, line, read-1);
 		memset(line, 0, sizeof(line));
-
+		
 		read = getline(&line, &len, fp);      // proj_date_created
 		strncpy(ps->proj_date_created, line, read-1);
 		memset(line, 0, sizeof(line));
-
+		
 		read = getline(&line, &len, fp);      // proj_due_date
 		strncpy(ps->proj_date_due, line, read-1);
 		memset(line, 0, sizeof(line));
-
+		
 		read = getline(&line, &len, fp);      // proj_num_members
 		ps->proj_num_members = atoi(line);	  
 		memset(line, 0, sizeof(line));
-
-		LINKED_LIST * member_list;// = (LINKED_LIST *) malloc(sizeof(LINKED_LIST));
+		
+		LINKED_LIST * member_list = (LINKED_LIST *) malloc(sizeof(LINKED_LIST));
 		member_list->size = 0;
 		member_list->front = member_list->back = NULL;
 
@@ -306,18 +305,13 @@ LINKED_LIST * loadFromFile(){
 			// Add members to members linked list
 			char * p = (char *) calloc(50, sizeof(char));
 			read = getline(&line, &len, fp);
-			//line[strlen(line)-1] = '\0';
 			strncpy(p, line, read-1);
-			printf("reading: %s\n", p);// line);
+			//printf("reading: %s\n", p);// line);
 			append(member_list, p);//line);
 		}	
 		//--------------------------------------
 		// Now attach the linked list we just made to the proj
 		ps->proj_member_list = member_list;
-		printf("printing memberlist:\n");
-		traverseForward(ps->proj_member_list, displayMembers);
-		//printf("Printing project %d\n", ps->proj_id);
-		//printProject(ps);
 		// Add project to list to be returned
 		append(project_list, ps);
 	}
