@@ -41,6 +41,8 @@ typedef struct menu{
 	unsigned char option6[40];
 } MENU;
 
+#include "../HeaderFiles/projectFunctions.h"
+
 void HandleTCPClient(int clntSocket)
 {
     int recvMsgSize;                    /* Size of received message */
