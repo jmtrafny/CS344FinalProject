@@ -102,42 +102,18 @@ int main(int argc, char *argv[]) {
 }
 
 void talkToServer(int sock) {
-    printf("talk to server\n");
     //char * selection = (char *) calloc(50, sizeof(char));
     unsigned int selection = 0;
     unsigned char bye[5];
-    printf("outside while\n");
     while(1)
     {
         selection = displayMenuAndSendSelection(sock);
 
         printf("Client selected: %d\n", selection);
-/*      switch(selection)
-        {
-            case 1:
-                sendProjectInformation(sock);
-                break;
-            case 2:
-
-                break;
-            case 3:
-
-                break;
-            case 4:
-
-                break;
-            case 5:
-
-                break;
-            }
-
-*/      
-        printf("About to com\n");
+     
         if(selection == 6) break;
     }
     //selection = htonl(selection);
-    put(sock, &selection, sizeof(unsigned int));
-    get(sock, bye, 5);
     printf("%s\n", bye);
 }
 
