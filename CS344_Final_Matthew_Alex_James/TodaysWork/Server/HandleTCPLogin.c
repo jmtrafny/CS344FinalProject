@@ -18,7 +18,7 @@ void DieWithError(char *errorMessage);  /* Error handling function */
 void get(int, void *, unsigned int);
 void put(int, void *, unsigned int);
 unsigned int sendMenuAndWaitForResponse(int);
-
+/*
 typedef struct project_struct{
 	int proj_id;
 	char proj_desc[1000];
@@ -36,8 +36,7 @@ typedef struct menu{
 	unsigned char option5[40];
 	unsigned char option6[40];
 } MENU;
-
-#include "../HeaderFiles/projectFunctions.h"
+*/
 
 void HandleTCPLogin(int clntSocket)
 {

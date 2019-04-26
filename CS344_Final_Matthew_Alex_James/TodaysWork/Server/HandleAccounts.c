@@ -3,9 +3,9 @@
 #include <unistd.h>     /* for close() */
 #include <stdlib.h>
 #include <string.h>
-#include "../HeaderFiles/menu.h"
-#include "../HeaderFiles/linkedList.h"
-#include "../HeaderFiles/projectStructure.h"
+#include "menu.h"
+#include "linkedList.h"
+#include "projectStructure.h"
 
 #define RCVBUFSIZE 32   /* Size of receive buffer */
 #define NAME_SIZE 21 /*Includes room for null */
@@ -16,7 +16,10 @@
 void DieWithError(char *errorMessage);  /* Error handling function */
 void get(int, void *, unsigned int);
 void put(int, void *, unsigned int);
+unsigned int getPassword(int clntSocket);
+unsigned int getUsername(int clntSocket);
 
+/*
 typedef struct project_struct{
 	int proj_id;
 	char proj_desc[1000];
@@ -34,15 +37,17 @@ typedef struct menu{
 	unsigned char option5[40];
 	unsigned char option6[40];
 } MENU;
-
-#include "projectFunctions.h"
+*/
 
 void login(int clntSocket)
 {
     printf("In login fucntion");
     int recvMsgSize;                    /* Size of received message */
-    char * username[50];
-    char * password[50];
+    //char * username[50];
+    //char * password[50];
+    unsigned int username;
+    unsigned int password;
+
     unsigned char name[NAME_SIZE]; //max length 20
     int number = 0;
     unsigned char errorMsg[] = "Invalid Choice";
@@ -51,7 +56,7 @@ void login(int clntSocket)
     username = getUsername(clntSocket);
     password = getPassword(clntSocket);
 
-    printf("%s, %s", username, password);
+    printf("%d, %d", username, password);
 
     put(clntSocket, bye, sizeof(bye));
     close(clntSocket);    /* Close client socket */
@@ -62,8 +67,11 @@ void createAccount(int clntSocket)
 {
     printf("in createAccount");
     int recvMsgSize;                    /* Size of received message */
-    char * username[50];
-    char * password[50];
+    //char * username[50];
+    //char * password[50];
+    unsigned int username;
+    unsigned int password;
+
     unsigned char name[NAME_SIZE]; //max length 20
     int number = 0;
     unsigned char errorMsg[] = "Invalid Choice";
@@ -72,7 +80,7 @@ void createAccount(int clntSocket)
     username = getUsername(clntSocket);
     password = getPassword(clntSocket);
 
-    printf("%s, %s", username, password);
+    printf("%d, %d", username, password);
 
     put(clntSocket, bye, sizeof(bye));
     close(clntSocket);    /* Close client socket */
@@ -81,7 +89,8 @@ void createAccount(int clntSocket)
 
 unsigned int getUsername(int clntSocket) {
     MENU mainMenu;
-    char * response[50];
+    //char * response[50];
+    unsigned int response = 0;
     memset(&mainMenu, 0, sizeof(MENU));   /* Zero out structure */
     strcpy(mainMenu.option1, "1) Enter Username:\n");
     strcpy(mainMenu.option2, "\n");
@@ -91,13 +100,15 @@ unsigned int getUsername(int clntSocket) {
     strcpy(mainMenu.option6, "\n");
     printf("Sending menu\n");
     put(clntSocket, &mainMenu, sizeof(MENU));
-    get(clntSocket, &response, sizeof(char)*50);
+    //get(clntSocket, &response, sizeof(char)*50);
+    get(clntSocket, &response, sizeof(unsigned int));
     return ntohl(response);
 }
 
 unsigned int getPassword(int clntSocket) {
     MENU mainMenu;
-    char * response[50];
+    //char * response[50];
+    unsigned int response = 0;
     memset(&mainMenu, 0, sizeof(MENU));   /* Zero out structure */
     strcpy(mainMenu.option1, "1) Enter Password:\n");
     strcpy(mainMenu.option2, "\n");
@@ -107,6 +118,7 @@ unsigned int getPassword(int clntSocket) {
     strcpy(mainMenu.option6, "\n");
     printf("Sending menu\n");
     put(clntSocket, &mainMenu, sizeof(MENU));
-    get(clntSocket, &response, sizeof(char)*50);
+    //get(clntSocket, &response, sizeof(char)*50);
+    get(clntSocket, &response, sizeof(unsigned int));
     return ntohl(response);
 }
