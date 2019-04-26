@@ -8,7 +8,7 @@
 #define MAXPENDING 5    /* Maximum outstanding connection requests */
 
 void DieWithError(char *errorMessage);  /* Error handling function */
-void HandleTCPClient(int clntSocket);   /* TCP client handling function */
+void HandleTCPLogin(int clntSocket);   /* TCP client handling function */
 
 int main(int argc, char *argv[])
 {

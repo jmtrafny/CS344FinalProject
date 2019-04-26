@@ -4,8 +4,9 @@
 #include <stdlib.h>
 #include <string.h>
 //#include "../HeaderFiles/menu.h"
-//#include "../HeaderFiles/linkedList.h"
-//#include "../HeaderFiles/projectStructure.h"
+#include "linkedList.h"
+#include "menu.h"
+#include "projectStructure.h"
 
 #define RCVBUFSIZE 32   /* Size of receive buffer */
 #define NAME_SIZE 21 /*Includes room for null */
@@ -17,17 +18,6 @@ void DieWithError(char *errorMessage);  /* Error handling function */
 void get(int, void *, unsigned int);
 void put(int, void *, unsigned int);
 unsigned int sendMenuAndWaitForResponse(int);
-void askForName(int sock, char *, unsigned int);
-void doSomethingWithName(char *);
-void askForNumber(int sock, int *, unsigned int);
-void doSomethingWithNumber(int);
-void createProject(int sock, PROJECT_STRUCT * project);
-void askForProjectID(int sock, int numPtr, unsigned int size);
-void askForProjectDescription(int sock, char * stringPtr, unsigned int size);
-void askForProjectDateCreated(int sock, char * stringPtr, unsigned int size);
-void askForProjectDateDue(int sock, char * stringPtr, unsigned int size);
-void askForMemberNum(int sock, char * numPtr, unsigned char size);
-void doSomethingWithName(char * name);
 
 typedef struct project_struct{
 	int proj_id;
