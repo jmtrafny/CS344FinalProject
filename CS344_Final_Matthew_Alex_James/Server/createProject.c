@@ -8,7 +8,9 @@
 #define DESC_SIZE 1001 //project description size
 #define DATE_SIZE 9 //project date created and due size
 
-void createProject(int sock, PROJECT_STRUCT * project) {
+PROJECT_STRUCT * createProject(int sock) {
+    PROJECT_STRUCT * project = (PROJECT_STRUCT *) calloc (1, sizeof(PROJECT_STRUCT));
+
     askForProjectID(sock, &project->proj_id, sizeof(int));
     printf("This is the project ID: %d\n", project->proj_id);
 
@@ -24,6 +26,8 @@ void createProject(int sock, PROJECT_STRUCT * project) {
     printf("Before askForNumMembers\n");
     askForMemberNum(sock, project->proj_num_members, sizeof(unsigned char));
     printf("This ran successfully.\n");
+
+    return project;
 }
 
 

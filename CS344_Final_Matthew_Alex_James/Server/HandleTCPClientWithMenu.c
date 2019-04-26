@@ -16,7 +16,7 @@ void DieWithError(char *errorMessage);  /* Error handling function */
 void get(int, void *, unsigned int);
 void put(int, void *, unsigned int);
 unsigned int sendMenuAndWaitForResponse(int);
-void createProject(int sock, PROJECT_STRUCT * project);
+PROJECT_STRUCT * createProject(int sock);
 
 void HandleTCPClient(int clntSocket)
 {
@@ -24,7 +24,7 @@ void HandleTCPClient(int clntSocket)
     unsigned int response = 0;
     unsigned char name[NAME_SIZE]; //max length 20
     int number = 0;
-    PROJECT_STRUCT * project = (PROJECT_STRUCT *) calloc (1, sizeof(PROJECT_STRUCT));
+    LINKED_LIST * project_list = (LINKED_LIST *) calloc(1, sizeof(LINKED_LIST));
     unsigned char errorMsg[] = "Invalid Choice";
     unsigned char bye[] = "Bye!";
 
@@ -33,18 +33,28 @@ void HandleTCPClient(int clntSocket)
     {
         switch(response)
         {
-            case 1: printf("Client created a project.\n");
-                    createProject(clntSocket, project);
-                    break;
-            case 2: printf("Client is editing a project.\n");
-                    break;
-            case 3: printf("Client is deleting a project.\n");
-                    break;
-            case 4: printf("Client is saving a project.\n");
-                    break;
-            case 5: printf("Client is displaying a project.\n");
-                    break;
-            default: printf("Client selected junk.\n"); put(clntSocket, errorMsg, sizeof(errorMsg)); break;
+            case 1: 
+            	printf("Client created a project.\n");
+            	PROJECT_STRUCT * project = (PROJECT_STRUCT *) calloc (1, sizeof(PROJECT_STRUCT));
+                project = createProject(clntSocket);
+                append(project_list, project);
+                break;
+            case 2: 
+            	printf("Client is editing a project.\n");
+                break;
+            case 3: 
+            	printf("Client is deleting a project.\n");
+                break;
+            case 4: 
+            	printf("Client is saving a project.\n");
+                break;
+            case 5: 
+            	printf("Client is displaying a project.\n");
+                break;
+            default: 
+            	printf("Client selected junk.\n"); 
+            	put(clntSocket, errorMsg, sizeof(errorMsg)); 
+            	break;
         }
         response = sendMenuAndWaitForResponse(clntSocket);
     }//end while

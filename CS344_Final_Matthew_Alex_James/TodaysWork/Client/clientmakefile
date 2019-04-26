@@ -1,5 +1,5 @@
-clientWithMenu:	clientWithMenu.c transmission.o DieWithError.o
-	gcc clientWithMenu.c transmission.o DieWithError.o -o clientWithMenu
+clientLogin: clientLogin.c transmission.o DieWithError.o
+	gcc clientLogin.c transmission.o DieWithError.o -o run_client
 
 transmission.o:	transmission.c
 	gcc -c transmission.c
