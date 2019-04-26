@@ -10,7 +10,7 @@
 #define DESC_SIZE 1001 //project description size
 #define DATE_SIZE 9 //project date created and due size
 
-//#include "../HeaderFiles/
+#include "../HeaderFiles/menu.h"
 
 typedef struct{
   unsigned int x;
@@ -22,15 +22,6 @@ typedef struct{
   unsigned int x;
   unsigned int y;
 }DATA_TYPE;
-
-struct menu{
-	unsigned char option1[40];
-	unsigned char option2[40];
-	unsigned char option3[40];
-	unsigned char option4[40];
-	unsigned char option5[40];
-	unsigned char option6[40];
-};
 
 void DieWithError(char *errorMessage);  /* Error handling function */
 void get(int, void *, unsigned int);
@@ -130,7 +121,7 @@ void talkToServer(int sock) {
 }
 
 unsigned int displayMenuAndSendSelection(int sock) {
-    struct menu menuBuffer;     /* Buffer for echo string */
+    MENU menuBuffer;     /* Buffer for echo string */
     unsigned int response = 0;
     unsigned int output;
 
