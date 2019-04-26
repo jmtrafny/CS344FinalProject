@@ -16,7 +16,8 @@ void DieWithError(char *errorMessage);  /* Error handling function */
 void get(int, void *, unsigned int);
 void put(int, void *, unsigned int);
 unsigned int sendMenuAndWaitForResponse(int);
-PROJECT_STRUCT * createProject(int sock);
+void append(LINKED_LIST * listPtr, void * data);
+//PROJECT_STRUCT * createProject(int sock);
 
 void HandleTCPClient(int clntSocket)
 {
@@ -38,6 +39,7 @@ void HandleTCPClient(int clntSocket)
             	PROJECT_STRUCT * project = (PROJECT_STRUCT *) calloc (1, sizeof(PROJECT_STRUCT));
                 project = createProject(clntSocket);
                 append(project_list, project);
+                //printProject(project);
                 break;
             case 2: 
             	printf("Client is editing a project.\n");

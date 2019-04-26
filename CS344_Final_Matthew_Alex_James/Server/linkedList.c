@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "linkedList.h"
-#include "projectStructure.h"
+#include "../HeaderFiles/linkedList.h"
+#include "../HeaderFiles/projectStructure.h"
 
 //void append(LINKED_LIST * listPtr, struct * project);
 void append(LINKED_LIST * listPtr, void * data)

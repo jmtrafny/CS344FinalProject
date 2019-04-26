@@ -13,7 +13,8 @@ typedef struct project_struct{
 	LINKED_LIST * proj_member_list;
 } PROJECT_STRUCT;
 
-void createProject(int sock, PROJECT_STRUCT * project);
+
+PROJECT_STRUCT * createProject(int sock);
 void askForProjectID(int sock, int * numPtr, unsigned int size);
 void askForProjectDescription(int sock, char * stringPtr, unsigned int size);
 void askForProjectDateCreated(int sock, char * stringPtr, unsigned int size);
