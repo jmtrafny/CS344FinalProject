@@ -39,6 +39,7 @@ void HandleTCPClient(int clntSocket)
             	PROJECT_STRUCT * project = (PROJECT_STRUCT *) calloc (1, sizeof(PROJECT_STRUCT));
                 project = createProject(clntSocket);
                 append(project_list, project);
+                printf("Project List size: %d\n", project_list->size);
                 //printProject(project);
                 break;
             case 2: 
@@ -49,6 +50,8 @@ void HandleTCPClient(int clntSocket)
                 break;
             case 4: 
             	printf("Client is saving a project.\n");
+                FILE * fp;
+                sendToFile(project_list, fp);
                 break;
             case 5: 
             	printf("Client is displaying a project.\n");

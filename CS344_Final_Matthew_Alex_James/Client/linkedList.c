@@ -226,13 +226,14 @@ void sendToFile(LINKED_LIST * listPtr, FILE * outFile){
 		fprintf(outFile, "%s\n", ps->proj_date_due);
 		fprintf(outFile, "%d\n", ps->proj_num_members);
 		// Go through members
-		while(member_node){
-			char * arr = member_node->dataPtr;
-			fprintf(outFile, "%s\n", arr);
-			//printf("%s\n", arr);
-			member_node = member_node->next;
+		if(ps->proj_member_list != NULL){
+			while(member_node){
+				char * arr = member_node->dataPtr;
+				fprintf(outFile, "%s\n", arr);
+				//printf("%s\n", arr);
+				member_node = member_node->next;
+			}
 		}
-
 		// Go to next node
 		front = front->next;
 	}

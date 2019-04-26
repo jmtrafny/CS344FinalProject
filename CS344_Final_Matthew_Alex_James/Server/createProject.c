@@ -10,6 +10,7 @@
 
 PROJECT_STRUCT * createProject(int sock) {
     PROJECT_STRUCT * project = (PROJECT_STRUCT *) calloc (1, sizeof(PROJECT_STRUCT));
+    LINKED_LIST * member_list = (LINKED_LIST *) calloc (1, sizeof(LINKED_LIST));
 
     askForProjectID(sock, &project->proj_id, sizeof(int));
     printf("This is the project ID: %d\n", project->proj_id);
@@ -23,10 +24,17 @@ PROJECT_STRUCT * createProject(int sock) {
     askForProjectDateDue(sock, project->proj_date_due, DATE_SIZE);
     printf("This is the project due date: %s\n", project->proj_date_due);
 
-    printf("Before askForNumMembers\n");
     askForMemberNum(sock, project->proj_num_members, sizeof(unsigned char));
-    printf("This ran successfully.\n");
+    printf("This is the number of members: %d", project->proj_num_members);
 
+    /*
+    int i = 0;
+    for(i = 0; i < project->proj_num_members; i++){
+        askForMemberName();
+    }
+    */
+
+    printf("leaving createProject()\n");
     return project;
 }
 

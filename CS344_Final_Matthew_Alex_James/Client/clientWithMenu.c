@@ -11,17 +11,8 @@
 #define DATE_SIZE 9 //project date created and due size
 
 #include "../HeaderFiles/menu.h"
-
-typedef struct{
-  unsigned int x;
-  unsigned int y;
-  unsigned char oper;
-}TRANS_DATA_TYPE;
-
-typedef struct{
-  unsigned int x;
-  unsigned int y;
-}DATA_TYPE;
+#include "../HeaderFiles/linkedList.h"
+#include "../HeaderFiles/projectStructure.h"
 
 void DieWithError(char *errorMessage);  /* Error handling function */
 void get(int, void *, unsigned int);
@@ -106,7 +97,7 @@ void talkToServer(int sock) {
 
                 break;
             case 4:
-
+                printf("Saving file to out.file\n");
                 break;
             case 5:
 
@@ -125,7 +116,7 @@ unsigned int displayMenuAndSendSelection(int sock) {
     unsigned int response = 0;
     unsigned int output;
 
-    printf("Inside client display menu\n");
+    printf("Please select from the menu:\n");
     get(sock, &menuBuffer, sizeof(struct menu));  //in this case server is also sending null
     printf("%s\n", menuBuffer.option1);
     printf("%s\n", menuBuffer.option2);
