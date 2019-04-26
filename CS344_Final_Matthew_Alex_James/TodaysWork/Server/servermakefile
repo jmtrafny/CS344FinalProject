@@ -1,0 +1,17 @@
+serverWithMenu: serverWithMenu.c linkedList.o handleTCPLogin.o handleAccounts.o transmission.o DieWithError.o
+	gcc serverWithMenu.c linkedList.o handleTCPLogin.o handleAccounts.o transmission.o DieWithError.o -o run_server
+
+linkedList.o:	linkedList.c linkedList.h
+	gcc -c linkedList.c
+
+handleTCPLogin.o: handleTCPLogin.c
+	gcc -c handleTCPLogin.c
+
+handleAccounts.o: handleAccounts.c
+	gcc -c handleAccounts.c
+
+transmission.o:	transmission.c
+	gcc -c transmission.c
+
+DieWithError.o:	DieWithError.c
+	gcc -c DieWithError.c
