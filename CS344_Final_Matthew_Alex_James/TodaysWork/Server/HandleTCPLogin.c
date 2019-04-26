@@ -65,17 +65,20 @@ void HandleTCPLogin(int clntSocket)
         switch(response)
         {
             case 1: printf("Selected 'Log In'\n");
-                  //  createProject(clntSocket, project);
-                    break;
+                login(clntSocket);
+                break;
             case 2: printf("Selected 'Create Account'\n");
-                    break;
-            case 3: printf("Selected 'Coming Soon'\n");
-                    break;
-            case 4: printf("Selected 'Coming Soon'\n");
-                    break;
-            case 5: printf("Selected 'Coming Soon'\n");
-                    break;
-            default: printf("Client selected junk.\n"); put(clntSocket, errorMsg, sizeof(errorMsg)); break;
+                createAccount(clntSocket);
+                break;
+            case 3: printf("\n");
+                break;
+            case 4: printf("\n");
+                break;
+            case 5: printf("\n");
+                break;
+            default: printf("Client selected junk.\n"); 
+                put(clntSocket, errorMsg, sizeof(errorMsg)); 
+                break;
         }
         response = sendMenuAndWaitForResponse(clntSocket);
     }//end while
@@ -91,87 +94,12 @@ unsigned int sendMenuAndWaitForResponse(int clntSocket) {
     memset(&mainMenu, 0, sizeof(MENU));   /* Zero out structure */
     strcpy(mainMenu.option1, "1) Log In\n");
     strcpy(mainMenu.option2, "2) Create Account\n");
-    strcpy(mainMenu.option3, "3) Coming Soon!\n");
-    strcpy(mainMenu.option4, "4) Coming Soon!\n");
-    strcpy(mainMenu.option5, "5) Coming Soon!\n");
+    strcpy(mainMenu.option3, "\n");
+    strcpy(mainMenu.option4, "\n");
+    strcpy(mainMenu.option5, "\n");
     strcpy(mainMenu.option6, "6) Exit program\n");
     printf("Sending menu\n");
     put(clntSocket, &mainMenu, sizeof(MENU));
     get(clntSocket, &response, sizeof(unsigned int));
     return ntohl(response);
-}
-
-/*
-//"ask" portion of create project
-void createProject(int sock, PROJECT_STRUCT * project) {
-    askForProjectID(sock, project->proj_id, sizeof(project->proj_id));
-    askForProjectDescription(sock, project->proj_desc, DESC_SIZE);
-    askForProjectDateCreated(sock, project->proj_date_created, DATE_SIZE);
-    askForProjectDateDue(sock, project->proj_date_due, DATE_SIZE);
-    askForMemberNum(sock, project->proj_num_members, sizeof(project->proj_num_members));
-    printf("This ran successfully.\n");
-}
-
-
-
-void askForProjectID(int sock, int numPtr, unsigned int size) {
-    unsigned char msg[40];
-    int numIn = 0;
-
-    memset(msg, 0, sizeof(msg));
-    strcpy(msg, "Enter project number ID:\n");
-    put(sock, msg, sizeof(msg));
-    printf("Before get() in askForProjectID().\n");
-    get(sock, &numIn, size);
-    printf("After get() in askForProjectID().\n");
-    numPtr = ntohl(numIn);
-}
-
-void askForProjectDescription(int sock, char * stringPtr, unsigned int size) {
-    unsigned char msg[40];
-
-    memset(msg, 0, sizeof(msg));
-    strcpy(msg, "Enter project description:\n");
-    put(sock, msg, sizeof(msg));
-    memset(stringPtr, 0, DESC_SIZE);
-    printf("Before get() in askForProjectDescription().\n");
-    get(sock, stringPtr, DESC_SIZE);
-    printf("After get() in askForProjectDescription().\n");
-}
-
-void askForProjectDateCreated(int sock, char * stringPtr, unsigned int size) {
-    unsigned char msg[40];
-
-    memset(msg, 0, sizeof(msg));
-    strcpy(msg, "Enter project creation date:\n");
-    put(sock, msg, sizeof(msg));
-    memset(stringPtr, 0, DATE_SIZE);
-    get(sock, stringPtr, DATE_SIZE);
-}
-
-void askForProjectDateDue(int sock, char * stringPtr, unsigned int size) {
-    unsigned char msg[40];
-
-    memset(msg, 0, sizeof(msg));
-    strcpy(msg, "Enter project due date:\n");
-    put(sock, msg, sizeof(msg));
-    memset(stringPtr, 0, DATE_SIZE);
-    get(sock, stringPtr, DATE_SIZE);
-}
-
-void askForMemberNum(int sock, char * numPtr, unsigned char size) {
-    unsigned char msg[40];
-
-    memset(msg, 0, sizeof(msg));
-    strcpy(msg, "Enter number of members:\n");
-    put(sock, msg, sizeof(msg));
-    memset(numPtr, 0, sizeof(unsigned char));
-    get(sock, numPtr, sizeof(unsigned char));
-}
-
-void doSomethingWithName(char * name)
-{
-    printf("Received name from the client: %s\n", name);
-}
-*/
 }
