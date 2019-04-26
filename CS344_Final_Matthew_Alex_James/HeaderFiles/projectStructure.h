@@ -10,9 +10,14 @@ typedef struct project_struct{
 	char proj_date_created[9];
 	char proj_date_due[9];
 	unsigned char proj_num_members;
-	LINKED_LIST proj_member_list;
+	LINKED_LIST * proj_member_list;
 } PROJECT_STRUCT;
 
-
+void createProject(int sock, PROJECT_STRUCT * project);
+void askForProjectID(int sock, int * numPtr, unsigned int size);
+void askForProjectDescription(int sock, char * stringPtr, unsigned int size);
+void askForProjectDateCreated(int sock, char * stringPtr, unsigned int size);
+void askForProjectDateDue(int sock, char * stringPtr, unsigned int size);
+void askForMemberNum(int sock, char memNum, unsigned int size);
 
 #endif //PROJECT_STRUCTURE_H

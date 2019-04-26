@@ -10,6 +10,7 @@
 #define DESC_SIZE 1001 //project description size
 #define DATE_SIZE 9 //project date created and due size
 
+//#include "../HeaderFiles/
 
 typedef struct{
   unsigned int x;
@@ -163,6 +164,7 @@ void sendProjectID(int sock) {
     get(sock, msg, sizeof(msg));
     printf("%s\n", msg);
     scanf("%d", &number);
+    getchar(); //removing trailing whitespace -- scanf() can be very tricky!
     number = htonl(number);
     put(sock, &number, sizeof(int));
 }
@@ -175,7 +177,7 @@ void sendProjectDescription(int sock) {
     get(sock, msg, sizeof(msg));
     printf("%s\n", msg);
     memset(description, 0, DESC_SIZE);
-    scanf("%s", description);
+    fgets(description, DESC_SIZE, stdin);
     put(sock, description, DESC_SIZE);
 }
 
@@ -187,7 +189,7 @@ void sendProjectCreationDate(int sock) {
     get(sock, msg, sizeof(msg));
     printf("%s\n", msg);
     memset(date, 0, DATE_SIZE);
-    scanf("%s", date);
+    fgets(date, DATE_SIZE, stdin);
     put(sock, date, DATE_SIZE);
 }
 
@@ -199,7 +201,7 @@ void sendProjectDueDate(int sock) {
     get(sock, msg, sizeof(msg));
     printf("%s\n", msg);
     memset(date, 0, DATE_SIZE);
-    scanf("%s", date);
+    fgets(date, DATE_SIZE, stdin);
     put(sock, date, DATE_SIZE);
 }
 
@@ -210,9 +212,8 @@ void sendProjectMemberNum(int sock) {
     memset(msg, 0, sizeof(msg));
     get(sock, msg, sizeof(msg));
     printf("%s\n", msg);
-    memset(memNum, 0, sizeof(unsigned char));
     scanf("%c", &memNum);
-    put(sock, memNum, sizeof(unsigned char));
+    put(sock, &memNum, sizeof(unsigned char));
 }
 
 

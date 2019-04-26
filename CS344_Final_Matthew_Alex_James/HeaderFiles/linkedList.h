@@ -1,11 +1,11 @@
 //Header file for doubly linked list type definitions and function declarations
-//remember to use relative paths to include in other files -> #include "../HeaderFiles/linkedList.h"
+//remember to use relative paths to include in other files -> #include "../LinkedList/linkedList.h"
 
 
 #ifndef LINKED_LIST_H
 #define LINKED_LIST_H
 
-typedef struct list_node {
+typedef struct list_node{
 	void * dataPtr;
 	struct list_node * next;
 	struct list_node * prev;
@@ -21,11 +21,12 @@ int insert(LINKED_LIST * listPtr, void * dataPtr, int position);
 void * removeAtPosition(LINKED_LIST * listPtr, int position);
 void printProject(void *dataPtr);
 void sendToFile(LINKED_LIST * listPtr, FILE * outfile);
+LINKED_LIST * loadFromFile();
 void display(void * dataPtr);
 void displayMembers(void * dataPtr);
 void displayProjID(void * dataPtr);
 void displayProjDesc(void * dataPtr);
-void traverseForward(LINKED_LIST head, void function(void *));
+void traverseForward(LINKED_LIST * head, void function(void *));
 void traverseBackward(LINKED_LIST head, void function(void *));
 
 
