@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
             return 1;
         }
         if (childpid == 0){
-            HandleTCPClient(clntSock);   //child process
+            HandleTCPLogin(clntSock);    //child process
             exit(0);                     //child process terminates
         }
 

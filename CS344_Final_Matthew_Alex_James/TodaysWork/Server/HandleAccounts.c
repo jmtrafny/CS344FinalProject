@@ -49,7 +49,27 @@ typedef struct menu{
 
 #include "../HeaderFiles/projectFunctions.h"
 
-void HandleTCPClient(int clntSocket)
+void login(int clntSocket)
+{
+    int recvMsgSize;                    /* Size of received message */
+    char * username[50];
+    char * password[50];
+    unsigned char name[NAME_SIZE]; //max length 20
+    int number = 0;
+    unsigned char errorMsg[] = "Invalid Choice";
+    unsigned char bye[] = "Bye!";
+
+    username = getUsername(clntSocket);
+    password = getPassword(clntSocket);
+
+    printf("%s, %s", username, password);
+
+    put(clntSocket, bye, sizeof(bye));
+    close(clntSocket);    /* Close client socket */
+    printf("Connection with client %d closed.\n", clntSocket);
+}
+
+void createAccount(int clntSocket)
 {
     int recvMsgSize;                    /* Size of received message */
     unsigned int response = 0;
@@ -104,74 +124,34 @@ unsigned int sendMenuAndWaitForResponse(int clntSocket) {
     return ntohl(response);
 }
 
-//"ask" portion of create project
-void createProject(int sock, PROJECT_STRUCT * project) {
-    askForProjectID(sock, project->proj_id, sizeof(project->proj_id));
-    askForProjectDescription(sock, project->proj_desc, DESC_SIZE);
-    askForProjectDateCreated(sock, project->proj_date_created, DATE_SIZE);
-    askForProjectDateDue(sock, project->proj_date_due, DATE_SIZE);
-    askForMemberNum(sock, project->proj_num_members, sizeof(project->proj_num_members));
-    printf("This ran successfully.\n");
+unsigned int getUsername(int clntSocket) {
+    MENU mainMenu;
+    char * response[50];
+    memset(&mainMenu, 0, sizeof(MENU));   /* Zero out structure */
+    strcpy(mainMenu.option1, "1) Enter Username:\n");
+    strcpy(mainMenu.option2, "\n");
+    strcpy(mainMenu.option3, "\n");
+    strcpy(mainMenu.option4, "\n");
+    strcpy(mainMenu.option5, "\n");
+    strcpy(mainMenu.option6, "\n");
+    printf("Sending menu\n");
+    put(clntSocket, &mainMenu, sizeof(MENU));
+    get(clntSocket, &response, sizeof(char)*50);
+    return ntohl(response);
 }
 
-
-
-void askForProjectID(int sock, int numPtr, unsigned int size) {
-    unsigned char msg[40];
-    int numIn = 0;
-
-    memset(msg, 0, sizeof(msg));
-    strcpy(msg, "Enter project number ID:\n");
-    put(sock, msg, sizeof(msg));
-    printf("Before get() in askForProjectID().\n");
-    get(sock, &numIn, size);
-    printf("After get() in askForProjectID().\n");
-    numPtr = ntohl(numIn);
-}
-
-void askForProjectDescription(int sock, char * stringPtr, unsigned int size) {
-    unsigned char msg[40];
-
-    memset(msg, 0, sizeof(msg));
-    strcpy(msg, "Enter project description:\n");
-    put(sock, msg, sizeof(msg));
-    memset(stringPtr, 0, DESC_SIZE);
-    printf("Before get() in askForProjectDescription().\n");
-    get(sock, stringPtr, DESC_SIZE);
-    printf("After get() in askForProjectDescription().\n");
-}
-
-void askForProjectDateCreated(int sock, char * stringPtr, unsigned int size) {
-    unsigned char msg[40];
-
-    memset(msg, 0, sizeof(msg));
-    strcpy(msg, "Enter project creation date:\n");
-    put(sock, msg, sizeof(msg));
-    memset(stringPtr, 0, DATE_SIZE);
-    get(sock, stringPtr, DATE_SIZE);
-}
-
-void askForProjectDateDue(int sock, char * stringPtr, unsigned int size) {
-    unsigned char msg[40];
-
-    memset(msg, 0, sizeof(msg));
-    strcpy(msg, "Enter project due date:\n");
-    put(sock, msg, sizeof(msg));
-    memset(stringPtr, 0, DATE_SIZE);
-    get(sock, stringPtr, DATE_SIZE);
-}
-
-void askForMemberNum(int sock, char * numPtr, unsigned char size) {
-    unsigned char msg[40];
-
-    memset(msg, 0, sizeof(msg));
-    strcpy(msg, "Enter number of members:\n");
-    put(sock, msg, sizeof(msg));
-    memset(numPtr, 0, sizeof(unsigned char));
-    get(sock, numPtr, sizeof(unsigned char));
-}
-
-void doSomethingWithName(char * name)
-{
-    printf("Received name from the client: %s\n", name);
+unsigned int getPassword(int clntSocket) {
+    MENU mainMenu;
+    char * response[50];
+    memset(&mainMenu, 0, sizeof(MENU));   /* Zero out structure */
+    strcpy(mainMenu.option1, "1) Enter Password:\n");
+    strcpy(mainMenu.option2, "\n");
+    strcpy(mainMenu.option3, "\n");
+    strcpy(mainMenu.option4, "\n");
+    strcpy(mainMenu.option5, "\n");
+    strcpy(mainMenu.option6, "\n");
+    printf("Sending menu\n");
+    put(clntSocket, &mainMenu, sizeof(MENU));
+    get(clntSocket, &response, sizeof(char)*50);
+    return ntohl(response);
 }
