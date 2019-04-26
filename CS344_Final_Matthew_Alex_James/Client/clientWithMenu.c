@@ -100,7 +100,7 @@ void talkToServer(int sock) {
                 sendProjectInformation(sock);
                 break;
             case 2:
-
+                sendProjectInformation(sock);
                 break;
             case 3:
 
