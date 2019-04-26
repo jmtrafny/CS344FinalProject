@@ -16,8 +16,8 @@
 void DieWithError(char *errorMessage);  /* Error handling function */
 void get(int, void *, unsigned int);
 void put(int, void *, unsigned int);
-unsigned int getPassword(int clntSocket);
-unsigned int getUsername(int clntSocket);
+char * getPassword(int clntSocket);
+char * getUsername(int clntSocket);
 
 /*
 typedef struct project_struct{
@@ -43,10 +43,8 @@ void login(int clntSocket)
 {
     printf("In login fucntion");
     int recvMsgSize;                    /* Size of received message */
-    //char * username[50];
-    //char * password[50];
-    unsigned int username;
-    unsigned int password;
+    char * username = (char *) calloc(50, sizeof(char));
+    char * password = (char *) calloc(50, sizeof(char));
 
     unsigned char name[NAME_SIZE]; //max length 20
     int number = 0;
@@ -56,7 +54,7 @@ void login(int clntSocket)
     username = getUsername(clntSocket);
     password = getPassword(clntSocket);
 
-    printf("%d, %d", username, password);
+    printf("%s, %s", username, password);
 
     put(clntSocket, bye, sizeof(bye));
     close(clntSocket);    /* Close client socket */
@@ -67,10 +65,8 @@ void createAccount(int clntSocket)
 {
     printf("in createAccount");
     int recvMsgSize;                    /* Size of received message */
-    //char * username[50];
-    //char * password[50];
-    unsigned int username;
-    unsigned int password;
+    char * username = (char *) calloc(50, sizeof(char));
+    char * password = (char *) calloc(50, sizeof(char));
 
     unsigned char name[NAME_SIZE]; //max length 20
     int number = 0;
@@ -80,17 +76,16 @@ void createAccount(int clntSocket)
     username = getUsername(clntSocket);
     password = getPassword(clntSocket);
 
-    printf("%d, %d", username, password);
+    printf("%s, %s", username, password);
 
     put(clntSocket, bye, sizeof(bye));
     close(clntSocket);    /* Close client socket */
     printf("Connection with client %d closed.\n", clntSocket);
 }
 
-unsigned int getUsername(int clntSocket) {
+char * getUsername(int clntSocket) {
     MENU mainMenu;
-    //char * response[50];
-    unsigned int response = 0;
+    char * response = (char *) calloc(50, sizeof(char));
     memset(&mainMenu, 0, sizeof(MENU));   /* Zero out structure */
     strcpy(mainMenu.option1, "1) Enter Username:\n");
     strcpy(mainMenu.option2, "\n");
@@ -102,13 +97,13 @@ unsigned int getUsername(int clntSocket) {
     put(clntSocket, &mainMenu, sizeof(MENU));
     //get(clntSocket, &response, sizeof(char)*50);
     get(clntSocket, &response, sizeof(unsigned int));
-    return ntohl(response);
+    //return ntohl(response);
+    return response;
 }
 
-unsigned int getPassword(int clntSocket) {
+char * getPassword(int clntSocket) {
     MENU mainMenu;
-    //char * response[50];
-    unsigned int response = 0;
+    char * response = (char *) calloc(50, sizeof(char));
     memset(&mainMenu, 0, sizeof(MENU));   /* Zero out structure */
     strcpy(mainMenu.option1, "1) Enter Password:\n");
     strcpy(mainMenu.option2, "\n");
@@ -120,5 +115,6 @@ unsigned int getPassword(int clntSocket) {
     put(clntSocket, &mainMenu, sizeof(MENU));
     //get(clntSocket, &response, sizeof(char)*50);
     get(clntSocket, &response, sizeof(unsigned int));
-    return ntohl(response);
+    //return ntohl(response);
+    return response;
 }

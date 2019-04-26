@@ -147,6 +147,12 @@ unsigned int displayMenuAndSendSelection(int sock) {
     return response;
 }
 
+
+
+
+
+// Below here is probababy not needed
+
 void sendProjectInformation(int sock) {
     sendProjectID(sock);
     sendProjectDescription(sock);
