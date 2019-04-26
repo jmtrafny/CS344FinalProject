@@ -13,6 +13,10 @@ typedef struct project_struct{
 	LINKED_LIST * proj_member_list;
 } PROJECT_STRUCT;
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/master
 PROJECT_STRUCT * createProject(int sock);
 void askForProjectID(int sock, int * numPtr, unsigned int size);
 void askForProjectDescription(int sock, char * stringPtr, unsigned int size);
