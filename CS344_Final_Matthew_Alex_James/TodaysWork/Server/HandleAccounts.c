@@ -96,7 +96,7 @@ char * getUsername(int clntSocket) {
     printf("Sending menu\n");
     put(clntSocket, &mainMenu, sizeof(MENU));
     //get(clntSocket, &response, sizeof(char)*50);
-    get(clntSocket, &response, sizeof(unsigned int));
+    get(clntSocket, &response, sizeof(char)*50);
     //return ntohl(response);
     return response;
 }
@@ -114,7 +114,7 @@ char * getPassword(int clntSocket) {
     printf("Sending menu\n");
     put(clntSocket, &mainMenu, sizeof(MENU));
     //get(clntSocket, &response, sizeof(char)*50);
-    get(clntSocket, &response, sizeof(unsigned int));
+    get(clntSocket, &response, sizeof(char)*50);
     //return ntohl(response);
     return response;
 }

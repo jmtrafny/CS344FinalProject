@@ -4,13 +4,16 @@
 #include <stdlib.h>     /* for atoi() and exit() */
 #include <string.h>     /* for memset() */
 #include <unistd.h>     /* for close() */
+#include "linkedList.h"
+#include "menu.h"
+#include "projectStructure.h"
 
 #define RCVBUFSIZE 100   /* Size of receive buffer */
 #define NAME_SIZE 21 /*Includes room for null */
 #define DESC_SIZE 1001 //project description size
 #define DATE_SIZE 9 //project date created and due size
 
-
+/*
 typedef struct{
   unsigned int x;
   unsigned int y;
@@ -30,18 +33,22 @@ struct menu{
 	unsigned char option5[40];
 	unsigned char option6[40];
 };
+*/
 
 void DieWithError(char *errorMessage);  /* Error handling function */
 void get(int, void *, unsigned int);
 void put(int, void *, unsigned int);
 void talkToServer(int);
 unsigned int displayMenuAndSendSelection(int);
+
+/*
 void sendProjectInformation(int);
 void sendProjectID(int);
 void sendProjectDescription(int);
 void sendProjectCreationDate(int);
 void sendProjectDueDate(int);
 void sendProjectMemberNum(int);
+*/
 
 int main(int argc, char *argv[]) {
     int sock;                        /* Socket descriptor */
@@ -54,9 +61,9 @@ int main(int argc, char *argv[]) {
                                        and total bytes read */
     int answer;
 
-    DATA_TYPE data;
-    TRANS_DATA_TYPE incoming;
-    memset(&incoming, 0, sizeof(TRANS_DATA_TYPE));
+//    DATA_TYPE data;
+//    TRANS_DATA_TYPE incoming;
+//    memset(&incoming, 0, sizeof(TRANS_DATA_TYPE));
 
     if ((argc < 2) || (argc > 3))    /* Test for correct number of arguments */
     {
@@ -95,14 +102,17 @@ int main(int argc, char *argv[]) {
 }
 
 void talkToServer(int sock) {
+    printf("talk to server\n");
+    //char * selection = (char *) calloc(50, sizeof(char));
     unsigned int selection = 0;
     unsigned char bye[5];
-
+    printf("outside while\n");
     while(1)
     {
         selection = displayMenuAndSendSelection(sock);
+
         printf("Client selected: %d\n", selection);
-        switch(selection)
+/*      switch(selection)
         {
             case 1:
                 sendProjectInformation(sock);
@@ -120,9 +130,12 @@ void talkToServer(int sock) {
 
                 break;
             }
+
+*/      
+        printf("About to com\n");
         if(selection == 6) break;
     }
-    selection = htonl(selection);
+    //selection = htonl(selection);
     put(sock, &selection, sizeof(unsigned int));
     get(sock, bye, 5);
     printf("%s\n", bye);
@@ -130,7 +143,9 @@ void talkToServer(int sock) {
 
 unsigned int displayMenuAndSendSelection(int sock) {
     struct menu menuBuffer;     /* Buffer for echo string */
+    //char * response = (char *) calloc(50, sizeof(char));
     unsigned int response = 0;
+    unsigned int network_response = 0;
     unsigned int output;
 
     printf("Inside client display menu\n");
@@ -142,16 +157,12 @@ unsigned int displayMenuAndSendSelection(int sock) {
     printf("%s\n", menuBuffer.option5);
     printf("%s\n", menuBuffer.option6);
     scanf("%d", &response);
-    output = htonl(response);
-    put(sock, &output, sizeof(unsigned int));
+    network_response = htonl(response);
+    put(sock, &network_response, sizeof(unsigned int));
     return response;
 }
 
-
-
-
-
-// Below here is probababy not needed
+/*
 
 void sendProjectInformation(int sock) {
     sendProjectID(sock);
@@ -220,5 +231,6 @@ void sendProjectMemberNum(int sock) {
     scanf("%c", &memNum);
     put(sock, memNum, sizeof(unsigned char));
 }
+*/
 
 
