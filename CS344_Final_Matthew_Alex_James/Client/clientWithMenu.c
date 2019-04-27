@@ -80,6 +80,7 @@ int main(int argc, char *argv[]) {
 void talkToServer(int sock) {
     unsigned int selection = 0;
     unsigned char bye[5];
+    unsigned int selectionb = 0;
 
     while(1)
     {
@@ -91,7 +92,34 @@ void talkToServer(int sock) {
                 sendProjectInformation(sock);
                 break;
             case 2:
-                sendProjectInformation(sock);
+
+                while(2) {
+                    selectionb = displayMenuAndSendSelection(sock);
+
+                    switch(selectionb)
+                    {
+                        case 1:
+                            sendProjectID(sock);
+                            break;
+                        case 2:
+                            sendProjectDescription(sock);
+                            break;
+                        case 3:
+                            sendProjectCreationDate(sock);
+                            break;
+                        case 4:
+                            sendProjectDueDate(sock);
+                            break;
+                        case 5:
+                            sendProjectMemberNum(sock);
+                            break;
+                        }
+                    if(selectionb == 6) break;
+                }
+                selectionb = htonl(selectionb);
+                put(sock, &selectionb, sizeof(unsigned int));
+                get(sock, bye, 5);
+                printf("%s\n", bye);
                 break;
             case 3:
 
