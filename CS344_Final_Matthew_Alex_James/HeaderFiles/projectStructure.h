@@ -42,5 +42,6 @@ void askForProjectDescription(int sock, char * stringPtr, unsigned int size);
 void askForProjectDateCreated(int sock, char * stringPtr, unsigned int size);
 void askForProjectDateDue(int sock, char * stringPtr, unsigned int size);
 void askForMemberNum(int sock, char memNum, unsigned int size);
+void editProject(int sock, LINKED_LIST * projectList);
 
 #endif //PROJECT_STRUCTURE_H

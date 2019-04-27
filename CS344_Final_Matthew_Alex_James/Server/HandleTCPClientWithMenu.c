@@ -30,6 +30,7 @@ void get(int, void *, unsigned int);
 void put(int, void *, unsigned int);
 unsigned int sendMenuAndWaitForResponse(int);
 void append(LINKED_LIST * listPtr, void * data);
+void editProject(int sock, LINKED_LIST * projectList);
 //PROJECT_STRUCT * createProject(int sock);
 
 /*

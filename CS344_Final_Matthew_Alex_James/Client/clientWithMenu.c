@@ -289,6 +289,7 @@ void sendProjectCreationDate(int sock) {
     printf("%s\n", msg);
     memset(date, 0, DATE_SIZE);
     fgets(date, DATE_SIZE, stdin);
+    getchar();
     put(sock, date, DATE_SIZE);
 }
 
@@ -312,6 +313,7 @@ void sendProjectDueDate(int sock) {
     printf("%s\n", msg);
     memset(date, 0, DATE_SIZE);
     fgets(date, DATE_SIZE, stdin);
+    getchar();
     put(sock, date, DATE_SIZE);
 }
 

@@ -79,9 +79,7 @@ void askForProjectID(int sock, int * numPtr, unsigned int size) {
     memset(msg, 0, sizeof(msg));
     strcpy(msg, "Enter project number ID:\n");
     put(sock, msg, sizeof(msg));
-    printf("Before get() in askForProjectID().\n");
     get(sock, &numIn, size);
-    printf("After get() in askForProjectID().\n");
     *numPtr = ntohl(numIn);
 }
 
@@ -104,9 +102,7 @@ void askForProjectDescription(int sock, char * stringPtr, unsigned int size) {
     strcpy(msg, "Enter project description:\n");
     put(sock, msg, sizeof(msg));
     memset(stringPtr, 0, DESC_SIZE);
-    printf("Before get() in askForProjectDescription().\n");
     get(sock, stringPtr, DESC_SIZE);
-    printf("After get() in askForProjectDescription().\n");
 }
 
 /*
