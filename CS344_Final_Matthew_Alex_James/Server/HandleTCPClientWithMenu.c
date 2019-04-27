@@ -58,7 +58,7 @@ void HandleTCPClient(int clntSocket)
     {
         switch(response)
         {
-            case 1: 
+            case 1:
             	printf("Client created a project.\n");
             	PROJECT_STRUCT * project = (PROJECT_STRUCT *) calloc (1, sizeof(PROJECT_STRUCT));
                 project = createProject(clntSocket);
@@ -66,23 +66,24 @@ void HandleTCPClient(int clntSocket)
                 printf("Project List size: %d\n", project_list->size);
                 //printProject(project);
                 break;
-            case 2: 
+            case 2:
             	printf("Client is editing a project.\n");
+            	editProject(clntSocket, project_list);
                 break;
-            case 3: 
+            case 3:
             	printf("Client is deleting a project.\n");
                 break;
-            case 4: 
+            case 4:
             	printf("Client is saving a project.\n");
                 FILE * fp;
                 sendToFile(project_list, fp);
                 break;
-            case 5: 
+            case 5:
             	printf("Client is displaying a project.\n");
                 break;
-            default: 
-            	printf("Client selected junk.\n"); 
-            	put(clntSocket, errorMsg, sizeof(errorMsg)); 
+            default:
+            	printf("Client selected junk.\n");
+            	put(clntSocket, errorMsg, sizeof(errorMsg));
             	break;
         }
         response = sendMenuAndWaitForResponse(clntSocket);
