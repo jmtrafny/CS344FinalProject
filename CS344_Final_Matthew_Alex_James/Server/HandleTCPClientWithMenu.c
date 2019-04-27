@@ -1,3 +1,18 @@
+/*
+    Author:  Alex Hall
+             Matthieu Privat
+             James Trafny
+    Date: 4/27/2019
+    Program: HandleTCPClientWithMenu.c
+
+    Description:
+
+        This file is called after a connection has been 
+        made to the client.  The program flow here goes: 
+        send menu, wait for response, trigger fn based 
+        on respone, send new menu, repeat
+*/
+
 #include <stdio.h>      /* for printf() and fprintf() */
 #include <sys/socket.h> /* for recv() and send() */
 #include <unistd.h>     /* for close() */
@@ -10,8 +25,6 @@
 #define RCVBUFSIZE 32   /* Size of receive buffer */
 #define NAME_SIZE 21 /*Includes room for null */
 
-
-
 void DieWithError(char *errorMessage);  /* Error handling function */
 void get(int, void *, unsigned int);
 void put(int, void *, unsigned int);
@@ -19,6 +32,17 @@ unsigned int sendMenuAndWaitForResponse(int);
 void append(LINKED_LIST * listPtr, void * data);
 //PROJECT_STRUCT * createProject(int sock);
 
+/*
+ * Function:  HandleTCPClient 
+ * --------------------
+ * Takes in a user socket and sends it a menu, after
+ * sending the menu it waits for a response and triggers
+ * a function based on the response.
+ *
+ *  clntSock: client socket
+ *
+ *  returns: void
+ */
 void HandleTCPClient(int clntSocket)
 {
     int recvMsgSize;                    /* Size of received message */
@@ -69,6 +93,15 @@ void HandleTCPClient(int clntSocket)
     printf("Connection with client %d closed.\n", clntSocket);
 }
 
+/*
+ * Function:  sendMenuAndWaitForResponse 
+ * --------------------
+ * Takes in a user socket and sends it a menu
+ *
+ *  clntSock: client socket
+ *
+ *  returns: integer choice from user
+ */
 unsigned int sendMenuAndWaitForResponse(int clntSocket) {
     MENU mainMenu;
     unsigned int response = 0;

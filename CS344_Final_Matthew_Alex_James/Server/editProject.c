@@ -1,3 +1,15 @@
+/*
+    Author:  Alex Hall
+    Date: 4/27/2019
+    Program: DieWithError.c
+
+    Description:
+
+        Server side for editing a project.  Requires the
+        client socket and also a LINKED_LIST of project
+        structures to index into.
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -8,6 +20,18 @@
 #define DESC_SIZE 1001 //project description size
 #define DATE_SIZE 9
 
+/*
+ * Function:  editProject 
+ * --------------------
+ * Takes in a user socket and position within the list
+ * of projects to which project will be edited
+ *
+ *  sock: client socket
+ *  position: position within the linked list to edit
+ *            0 = position 1
+ *
+ *  returns: the edited PROJECT_STRUCT *
+ */
 PROJECT_STRUCT * editProject(int sock, int position) {
     PROJECT_STRUCT * project;
 
@@ -53,6 +77,15 @@ PROJECT_STRUCT * editProject(int sock, int position) {
 
 }
 
+/*
+ * Function:  sendProjectDataAndWaitForResponse 
+ * --------------------
+ * Sends editing options to client
+ *
+ *  clntSocket: client socket
+ *
+ *  returns: menu item selected (int)
+ */
 int sendProjectDataAndWaitForResponse(int clntSocket) {
     MENU projectData;
     unsigned int response = 0;
