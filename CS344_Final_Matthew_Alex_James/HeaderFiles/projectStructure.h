@@ -1,3 +1,14 @@
+/*
+	Author:  Alex Hall
+			 Matthieu Privat
+			 James Trafny
+	Date: 4/27/2019
+	Program: projectStructure.h
+
+	Description:
+
+		Hedder file project structures.
+*/
 
 #ifndef PROJECT_STRUCTURE_H
 #define PROJECT_STRUCTURE_H

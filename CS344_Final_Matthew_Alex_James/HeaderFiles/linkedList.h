@@ -1,6 +1,15 @@
-//Header file for doubly linked list type definitions and function declarations
-//remember to use relative paths to include in other files -> #include "../LinkedList/linkedList.h"
+/*
+	Author:  Alex Hall
+			 Matthieu Privat
+			 James Trafny
+	Date: 4/27/2019
+	Program: linkedList.h
 
+	Description:
+
+		Hedder file for linked lists.  Contains structures and prototypes
+		needed for DLL manipulations.
+*/
 
 #ifndef LINKED_LIST_H
 #define LINKED_LIST_H

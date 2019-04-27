@@ -1,3 +1,14 @@
+/*
+	Author:  Alex Hall
+			 Matthieu Privat
+			 James Trafny
+	Date: 4/27/2019
+	Program: menu.h
+
+	Description:
+
+		Hedder file menu structures.
+*/
 
 #ifndef MENU_H
 #define MENU_H
