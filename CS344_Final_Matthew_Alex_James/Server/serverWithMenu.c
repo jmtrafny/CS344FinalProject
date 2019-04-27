@@ -1,3 +1,19 @@
+/*
+    Author:  Alex Hall
+             Matthieu Privat
+             James Trafny
+    Date: 4/27/2019
+    Program: serverWithMenu.c
+
+    Description:
+
+        This file is the main entry point for the server.  The server
+        sets itself up for TCP connection, then waits for a connection.
+        Once a connection is recieved, the server spawns a child process
+        to handle the client communications so the server can await anothe
+        request to handle.
+*/
+
 #include <stdio.h>      /* for printf() and fprintf() */
 #include <sys/socket.h> /* for socket(), bind(), and connect() */
 #include <arpa/inet.h>  /* for sockaddr_in and inet_ntoa() */

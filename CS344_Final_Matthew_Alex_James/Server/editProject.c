@@ -1,3 +1,15 @@
+/*
+    Author:  Alex Hall
+    Date: 4/27/2019
+    Program: DieWithError.c
+
+    Description:
+
+        Server side for editing a project.  Requires the
+        client socket and also a LINKED_LIST of project
+        structures to index into.
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>

@@ -1,3 +1,12 @@
+/* 
+Authors: Alex Hall, James Trafny, Matthieu Privat
+Date: 27 April, 2019
+File: clientcopy.c
+
+This file is the client side of the TCP connection between server and client.
+This file creates and connects a socket along with the server.
+*/
+
 #include <netdb.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,9 +18,19 @@
 #define PORT 8080
 #define SA struct sockaddr
 
+/*
+Function: main()
+--------------------------------
+This function does everything in this file from making our socket, to finding our port and IP,
+to connecting the socket to the server.
+
+sockfd: file descriptor that stores values from the socket
+
+returns: none
+*/
+
 int main(){
     int sockfd;
-    int connfd;
     
     struct sockaddr_in servaddr, client; /* Struct to store address of server and client */
 

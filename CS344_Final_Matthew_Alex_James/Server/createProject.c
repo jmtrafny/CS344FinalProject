@@ -1,3 +1,15 @@
+/*
+	Author:  Alex Hall
+	Date: 4/27/2019
+	Program: createProject.c
+
+	Description:
+
+		This file is used by the server to create and return a new
+		project (PROJECT_STRUCT) to be added to project_list for 
+		use in the server.
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -8,6 +20,15 @@
 #define DESC_SIZE 1001 //project description size
 #define DATE_SIZE 9 //project date created and due size
 
+/*
+ * Function:  createProject 
+ * --------------------
+ * Takes a socket and returns a new project to the caller.   
+ *
+ *  sock: client socket for use getting info from user
+ *
+ *  returns: PROJECT_STRUCT *
+ */
 PROJECT_STRUCT * createProject(int sock) {
     PROJECT_STRUCT * project = (PROJECT_STRUCT *) calloc (1, sizeof(PROJECT_STRUCT));
     LINKED_LIST * member_list = (LINKED_LIST *) calloc (1, sizeof(LINKED_LIST));
@@ -39,7 +60,18 @@ PROJECT_STRUCT * createProject(int sock) {
 }
 
 
-
+/*
+ * Function:  askForProjectID 
+ * --------------------
+ * Takes a socket, data pointer, and size of that pointer
+ *  and asks to user for the ID of the project number.   
+ *
+ *  sock: client socket for use getting info from user
+ *  numPtr: integer pointer for getting int id
+ *  size: size of integer for get and put
+ *
+ *  returns: void
+ */
 void askForProjectID(int sock, int * numPtr, unsigned int size) {
     unsigned char msg[40];
     int numIn = 0;
@@ -53,6 +85,18 @@ void askForProjectID(int sock, int * numPtr, unsigned int size) {
     *numPtr = ntohl(numIn);
 }
 
+/*
+ * Function:  askForProjectDescription 
+ * --------------------
+ * Takes a socket, data pointer, and size of that pointer
+ *  and asks to user for a description of the project.   
+ *
+ *  sock: client socket for use getting info from user
+ *  stringPtr: char * pointer for getting description
+ *  size: size of char * for get and put
+ *
+ *  returns: void
+ */
 void askForProjectDescription(int sock, char * stringPtr, unsigned int size) {
     unsigned char msg[40];
 
@@ -65,6 +109,18 @@ void askForProjectDescription(int sock, char * stringPtr, unsigned int size) {
     printf("After get() in askForProjectDescription().\n");
 }
 
+/*
+ * Function:  askForProjectDateCreated 
+ * --------------------
+ * Takes a socket, data pointer, and size of that pointer
+ *  and asks to user for the creation date of the project.   
+ *
+ *  sock: client socket for use getting info from user
+ *  stringPtr: char * pointer for getting date mmddyy
+ *  size: size of char * for get and put
+ *
+ *  returns: void
+ */
 void askForProjectDateCreated(int sock, char * stringPtr, unsigned int size) {
     unsigned char msg[40];
 
@@ -75,6 +131,18 @@ void askForProjectDateCreated(int sock, char * stringPtr, unsigned int size) {
     get(sock, stringPtr, DATE_SIZE);
 }
 
+/*
+ * Function:  askForProjectDateDue 
+ * --------------------
+ * Takes a socket, data pointer, and size of that pointer
+ *  and asks to user for the due date of the project.   
+ *
+ *  sock: client socket for use getting info from user
+ *  stringPtr: char * pointer for getting due date mmddyy
+ *  size: size of char * for get and put
+ *
+ *  returns: void
+ */
 void askForProjectDateDue(int sock, char * stringPtr, unsigned int size) {
     unsigned char msg[40];
 
@@ -85,6 +153,18 @@ void askForProjectDateDue(int sock, char * stringPtr, unsigned int size) {
     get(sock, stringPtr, DATE_SIZE);
 }
 
+/*
+ * Function:  askForMemberNum 
+ * --------------------
+ * Takes a socket, data pointer, and size of that pointer
+ *  and asks to user for the number of members of the project.   
+ *
+ *  sock: client socket for use getting info from user
+ *  stringPtr: char pointer for getting the number of members
+ *  size: size of char for get and put
+ *
+ *  returns: void
+ */
 void askForMemberNum(int sock, char memNum, unsigned int size) {
     unsigned char msg[40];
 
