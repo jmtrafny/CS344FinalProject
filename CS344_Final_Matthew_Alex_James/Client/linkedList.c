@@ -1,10 +1,33 @@
+/*
+	Author:  James Trafny 2409105
+	Date: 4/27/2019
+	Program: linkedList.c
+
+	Description:
+
+		Functions supporting LINKED_LIST structures.  Includes functions for
+		adding and removing nodes at specific locations as well and displaying
+		or printing contents to and from a file.
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "linkedList.h"
 #include "projectStructure.h"
 
-//void append(LINKED_LIST * listPtr, struct * project);
+/*
+ * Function:  append 
+ * --------------------
+ * Takes in a linked list and the data that the new node
+ * will point to and appends it to the front of the list 
+ *
+ *  listPtr: pointer to list that will be appended
+ *  data: data that new node will point to
+ *
+ *  returns: no return
+ */
+
 void append(LINKED_LIST * listPtr, void * data)
 {
 	//int * dataCopy = (int *)malloc(sizeof(int));
@@ -28,6 +51,18 @@ void append(LINKED_LIST * listPtr, void * data)
 	listPtr->back = node;
 }
 
+/*
+ * Function:  prepend 
+ * --------------------
+ * Takes in a linked list and the data that the new node
+ * will point to and prepends it to the rear of the list 
+ *
+ *  listPtr: pointer to list that will be appended
+ *  data: data that new node will point to
+ *
+ *  returns: no return
+ */
+
 void prepend(LINKED_LIST * listPtr, void * data)
 {
 	if (data == NULL) return;
@@ -49,7 +84,19 @@ void prepend(LINKED_LIST * listPtr, void * data)
 	listPtr->front = node;
 }
 
-//int insert(LINKED_LIST * listPtr, struct * project, int position);
+/*
+ * Function:  insert 
+ * --------------------
+ * Takes in a linked list and data to be inserted at 
+ * the specified position. 
+ *
+ *  listPtr: pointer to list to manipulate
+ *  data: data to be pointed at by new node
+ *  position: position to insert new node (0 = front)
+ *
+ *  returns: 0 if successful
+ */
+
 int insert(LINKED_LIST * listPtr, void * data, int position){
 	// Setup pointers
 	LIST_NODE * tmpPtr = listPtr->front;
@@ -101,6 +148,7 @@ int insert(LINKED_LIST * listPtr, void * data, int position){
  *
  *  returns: pointer to data held by deleted node
  */
+
 void * removeFromFront(LINKED_LIST * listPtr){
 	LIST_NODE * tmpPtr = listPtr->front;
 	void * tempData = tmpPtr->dataPtr;
@@ -131,6 +179,7 @@ void * removeFromFront(LINKED_LIST * listPtr){
  *
  *  returns: pointer to data held by deleted node
  */
+
 void * removeFromBack(LINKED_LIST * listPtr){
 	LIST_NODE * tmpPtr = listPtr->back;
 
@@ -151,7 +200,18 @@ void * removeFromBack(LINKED_LIST * listPtr){
 	return tempData;
 }
 
-//void * removeAtPosition(LINKED_LIST * listPtr, int position);
+/*
+ * Function:  removeFromPosition 
+ * --------------------
+ * Takes in a linked list and removes the node at the specified
+ * position. 
+ *
+ *  listPtr: pointer to list to manipulate
+ *  position: position to insert new node (0 = front)
+ *
+ *  returns: pointer to removed node's data
+ */
+
 void * removeAtPosition(LINKED_LIST * listPtr, int position){
 	// Setup pointers
 	LIST_NODE * tmpPtr = listPtr->front;
@@ -190,7 +250,16 @@ void * removeAtPosition(LINKED_LIST * listPtr, int position){
 	return tempData;
 }
 
-// For displaying project to consol
+/*
+ * Function:  printProject 
+ * --------------------
+ * Takes in a pointer to a project structure to print. 
+ *
+ *  dataPtr: pointer to project structure
+ *
+ *  returns: void
+ */
+
 void printProject(void * dataPtr){
 	PROJECT_STRUCT * ps = (PROJECT_STRUCT *) dataPtr;
 	printf("Project ID: %d\n", ps->proj_id);
@@ -201,6 +270,18 @@ void printProject(void * dataPtr){
 	printf("Members:\n");
 	traverseForward(ps->proj_member_list, displayMembers);
 }
+
+/*
+ * Function:  sendToFile 
+ * --------------------
+ * Takes in a pointer to a list of projects and prints it
+ * out to the location of the file pointer. 
+ *
+ *  listPtr: pointer to a list of projects
+ *  outFile: pointer to output file
+ *
+ *  returns: void
+ */
 
 void sendToFile(LINKED_LIST * listPtr, FILE * outFile){
 	// Access first node in our list
@@ -240,6 +321,15 @@ void sendToFile(LINKED_LIST * listPtr, FILE * outFile){
 	
 	fclose(outFile);
 }
+
+/*
+ * Function:  loadFromFile 
+ * --------------------
+ * Creates a new project_list from the contents of a file.
+ *
+ *  returns: Linked list containing all the projects that
+ *			 were represented in the file.
+ */
 
 LINKED_LIST * loadFromFile(){
 	// Create project list that will be returned
@@ -323,7 +413,6 @@ LINKED_LIST * loadFromFile(){
 	return project_list;
 }
 
-//void display(struct * project);
 // Author: DBG
 void display(void * data)
 {
@@ -331,16 +420,19 @@ void display(void * data)
 	printf("%d\n",  *ptr);
 }
 
+// Author: DBG
 void displayMembers(void * dataPtr){
 	char * arr = dataPtr;
 	printf("%s\n", arr);
 }
 
+// Author: DBG
 void displayProjID(void * dataPtr){
 	PROJECT_STRUCT * ps = (PROJECT_STRUCT *) dataPtr;
 	printf("%d\n", ps->proj_id); 
 }
 
+// Author: DBG
 void displayProjDesc(void * dataPtr){
 	PROJECT_STRUCT * ps = (PROJECT_STRUCT *) dataPtr;
 	printf("%s\n", ps->proj_desc); 
@@ -356,7 +448,6 @@ void traverseForward(LINKED_LIST * head, void function(void *))
 		front = front->next;
 	}
 }
-
 
 // Author: DBG
 void traverseBackward(LINKED_LIST head, void function(void *))
